@@ -9,6 +9,18 @@
                 <span>Dashboard</span>
             </a>
         </li>
+        <li class="{{ request()->routeIs('admin.users.*') ? 'mm-active' : '' }}" >
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="mdi mdi-account"></i>
+                <span>Users</span>
+            </a>
+            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                @php( $roles = \App\Models\Role::where('id','!=',1)->get() )
+                @foreach ($roles as $role)
+                    <li class="{{ request()->routeIs('admin.settings.general') ? 'mm-active' : '' }}"><a href="{{ route('admin.users.index',$role->id) }}">{{$role->name}}</a></li>
+                @endforeach
+            </ul>
+        </li>
 
         <li class="{{ request()->routeIs('admin.organizations.index') ? 'mm-active' : '' }} {{ request()->routeIs('admin.organizations.create') ? 'mm-active' : '' }} {{ request()->routeIs('admin.organizations.edit') ? 'mm-active' : '' }}">
             <a href="{{ route('admin.organizations.index') }}" class="waves-effect {{ request()->routeIs('admin.organizations.index') ? 'mm-active' : '' }}">
@@ -22,6 +34,15 @@
                 <i class="mdi mdi-cube-outline"></i>
                 <span>Plans</span>
             </a>
+        </li>
+        <li class="{{ request()->routeIs('admin.settings.*') ? 'mm-active' : '' }}" >
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="mdi mdi-cog"></i>
+                <span>Settings</span>
+            </a>
+            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                <li class="{{ request()->routeIs('admin.settings.general') ? 'mm-active' : '' }}"><a href="{{ route('admin.settings.general') }}">General Settings</a></li>
+            </ul>
         </li>
 
     </ul>

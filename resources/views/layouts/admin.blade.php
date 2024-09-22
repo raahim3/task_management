@@ -17,7 +17,13 @@
         <!-- Responsive datatable examples -->
         <link href="{{ asset('admin_assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" /> 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-
+        
+        <link href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css" rel="stylesheet">
+        <style>
+            .dropify-wrapper .dropify-message span.file-icon {
+                font-size: 29px;
+            }
+        </style>
     </head>
     <body data-sidebar="dark">
 
@@ -130,6 +136,7 @@
         <script src="{{ asset('admin_assets/js/pages/dashboard.init.js') }}"></script>
         <script src="{{ asset('admin_assets/js/app.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
         @yield('script')
         <script>
             toastr.options = {
@@ -153,6 +160,8 @@
             @if(Session::has('warning'))
                 toastr.warning("{{ Session::get('warning') }}");
             @endif
+
+            $('.dropify').dropify();
         </script>        
     </body>
 </html>
