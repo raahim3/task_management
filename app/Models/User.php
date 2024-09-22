@@ -77,5 +77,10 @@ class User extends Authenticatable
         $subscription = $this->organization->subscriptions()->where('status', 1)->first();
         return json_decode($subscription->plan_data);
     }
+    public function hasPermission($permission)
+    {
+        $permissions = json_decode($this->role->permissions->permissions);
+        return in_array($permission, $permissions);
+    }
 
 }

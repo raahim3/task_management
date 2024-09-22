@@ -32,8 +32,8 @@ class UserDataTable extends DataTable
             ->addColumn('action',function($user){
                 return '<div class="d-flex">
                     <a href="'.route('team.show',$user->id).'" class="btn btn-sm btn-primary mr-2"><i class="mdi mdi-eye"></i></a>
-                    <a href="#" data-id="'.$user->id.'" data-name="'.$user->name.'" data-email="'.$user->email.'" data-role="'.$user->role_id.'" data-avatar="'.$user->avatar.'" class="btn btn-sm btn-info mr-2 edit_btn"><i class="mdi mdi-pencil"></i></a>
-                    <a href="#" data-id="'.$user->id.'" class="btn btn-sm '. ($user->status == 0 ? 'btn-success' : 'btn-danger') .' block_team_member">'. ($user->status == 0 ? '<i class="mdi mdi-check"></i>' : '<i class="mdi mdi-block-helper"></i>') .'</a>
+                    <a href="'. route('admin.users.edit', $user->id) .'"  class="btn btn-sm btn-info mr-2 edit_btn"><i class="mdi mdi-pencil"></i></a>
+                    <a href="javascript:void(0)" data-id="'.$user->id.'" class="btn btn-sm '. ($user->status == 0 ? 'btn-success' : 'btn-danger') .' block_team_member">'. ($user->status == 0 ? '<i class="mdi mdi-check"></i>' : '<i class="mdi mdi-block-helper"></i>') .'</a>
                 </div>';
             })
             ->addColumn('Organization',function($user){

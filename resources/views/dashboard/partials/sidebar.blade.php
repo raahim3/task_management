@@ -5,7 +5,7 @@
             <li class="dropdown active"><a href="{{ url('dashboard') }}" wire:navigate><i class="icon-home mr-1"></i> Dashboard</a>                  
                 <ul>
                     <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a href="{{ url('dashboard') }}"  wire:navigate><i class="icon-rocket"></i> Dashboard</a></li>
-                    @if(auth()->user()->role_id == 2)
+                    @if(auth()->user()->hasPermission('team_read'))
                         <li class="{{ Request::is('team') ? 'active' : '' }}"><a href="{{ route('team.index') }}"  wire:navigate><i class="icon-rocket"></i> Team</a></li>
                     @endif
                 </ul>

@@ -39,21 +39,4 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $credentials = $request->only('email', 'password');
-        if (auth()->attempt($credentials)) {
-            if(auth()->user()->role_id == 1){
-                auth()->logout();
-                return back()->with('error', 'You are not an admin');
-            }
-            return redirect()->route('admin.index');
-        }
-    }
 }

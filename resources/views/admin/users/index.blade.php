@@ -39,4 +39,21 @@
 
 @section('script')
     {{ $dataTable->scripts() }}
+    <script>
+        $(document).ready(function(){
+            $(document).on('click','.block_team_member',function() {
+                var id = $(this).data('id');
+                var _this = $(this);
+                $.ajax({
+                    url: "{{ route('admin.users.status', '') }}/" + id,
+                    type: 'GET',
+                    success: function(data) {
+                        if(data.status == 'success'){
+                            $('#user-table').DataTable().ajax.reload();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

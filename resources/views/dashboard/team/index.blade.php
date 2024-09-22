@@ -7,7 +7,9 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">                               
                 <h4 class="card-title">Team</h4>
-                <a href="#" data-toggle="modal" data-target="#createTeamModal" class="btn btn-primary"><i class="icon-plus"></i> Add</a>
+                @if(auth()->user()->hasPermission('team_create'))
+                    <a href="#" data-toggle="modal" data-target="#createTeamModal" class="btn btn-primary"><i class="icon-plus"></i> Add</a>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">

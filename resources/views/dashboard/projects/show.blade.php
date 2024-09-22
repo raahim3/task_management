@@ -7,7 +7,9 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">                               
                 <h4 class="card-title">Project Overview</h4>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#createTask"><i class="icon-plus"></i> Task</a>
+                @if (auth()->user()->hasPermission('task_create'))
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#createTask"><i class="icon-plus"></i> Task</a>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">

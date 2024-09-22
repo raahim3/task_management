@@ -19,6 +19,9 @@ class ProjectController extends Controller
      */
     public function index(ProjectsDataTable $dataTable)
     {
+        if(!auth()->user()->hasPermission('project_read')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
         return $dataTable->render('dashboard.projects.index');
     }
 
@@ -27,6 +30,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasPermission('project_create')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
         return view('dashboard.projects.create');
     }
 
@@ -35,6 +41,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->hasPermission('project_create')){
+            return response()->json(['status' => 'error','message' => 'You are not authorized to access this page']);
+        }
         $count_projects = Projects::where('organization_id',auth()->user()->organization->id)->count();
         if($count_projects >= auth()->user()->subscription_plan()->max_projects){
             return response()->json(['status' => 'error','message' => 'Your plan does not support more than '.auth()->user()->subscription_plan()->max_projects.' projects']);
@@ -63,6 +72,12 @@ class ProjectController extends Controller
      */
     public function show(string $id, ProjectTaskDataTable $dataTable)
     {
+        if(!auth()->user()->hasPermission('project_read')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
+        if(!auth()->user()->hasPermission('task_read')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
         $project = Projects::findOrFail($id);
         $assignees = User::with('role')->where('organization_id',auth()->user()->organization->id)->where('id','!=',auth()->user()->id)->where('status',1)->take(15)->get();
         return $dataTable->with('project_id', $id)->render('dashboard.projects.show', compact('project','assignees'));
@@ -95,6 +110,9 @@ class ProjectController extends Controller
 
     public function change_status(Request $request)
     {
+        if(!auth()->user()->hasPermission('project_edit')){
+            return response()->json(['status' => 'error','message' => 'You are not authorized to access this feature']);
+        }
         $project = Projects::find($request->id);
         $project->status = $request->status;
         $project->save();

@@ -15,6 +15,9 @@ class TeamController extends Controller
      */
     public function index(TeamDataTable $dataTable)
     {
+        if(!auth()->user()->hasPermission('team_read')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
         $roles = Role::where('id','!=',1)->get();
         return $dataTable->render('dashboard.team.index',compact('roles'));
     }
@@ -95,6 +98,7 @@ class TeamController extends Controller
             $user->password = bcrypt($request->password);
         }
         if($request->hasFile('profile')){
+            
             $image = $request->file('profile');
             $extension = $image->getClientOriginalExtension();
             $filename = time().'.'.$extension;

@@ -33,11 +33,16 @@ class TeamDataTable extends DataTable
             return '<div class="d-flex gap-2 align-items-center"><img src="'. $avatar .'" class="rounded-circle mr-2" width="30">'.$user->name.'</div>';
         })
         ->addColumn('action',function($user){
-            return '<div class="d-flex">
-                <a href="'.route('team.show',$user->id).'" class="btn btn-sm btn-primary mr-2"><i class="icon-eye"></i></a>
-                <a href="#" data-id="'.$user->id.'" data-name="'.$user->name.'" data-email="'.$user->email.'" data-role="'.$user->role_id.'" data-avatar="'.$user->avatar.'" class="btn btn-sm btn-info mr-2 edit_btn"><i class="icon-note"></i></a>
-                <a href="#" data-id="'.$user->id.'" class="btn btn-sm '. ($user->status == 0 ? 'btn-success' : 'btn-danger') .' block_team_member">'. ($user->status == 0 ? '<i class="bx bx-check"></i>' : '<i class="bx bx-block"></i>') .'</a>
-            </div>';
+            $action = '<div class="d-flex">
+                <a href="'.route('team.show',$user->id).'" class="btn btn-sm btn-primary mr-2"><i class="icon-eye"></i></a>';
+                if(auth()->user()->hasPermission('team_edit')){
+                    $action .= '<a href="#" data-id="'.$user->id.'" data-name="'.$user->name.'" data-email="'.$user->email.'" data-role="'.$user->role_id.'" data-avatar="'.$user->avatar.'" class="btn btn-sm btn-info mr-2 edit_btn"><i class="icon-note"></i></a>';
+                }
+                if(auth()->user()->hasPermission('team_delete')){
+                    $action .= '<a href="#" data-id="'.$user->id.'" class="btn btn-sm '. ($user->status == 0 ? 'btn-success' : 'btn-danger') .' block_team_member">'. ($user->status == 0 ? '<i class="bx bx-check"></i>' : '<i class="bx bx-block"></i>') .'</a>';
+                }
+            $action .= '</div>';
+            return $action;
         })
         ->addColumn('status',function($user){
             return $user->status == 0 ? '<span class="badge bg-danger text-white">Blocked</span>' : '<span class="badge bg-success text-white">Active</span>';

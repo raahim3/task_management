@@ -47,7 +47,8 @@
                             type: 'POST',
                             data: data,
                             success: function(response) {
-                                $element.removeClass('not-started-tag in-progress-tag complete-tag on-hold-tag');
+                                if(response.status == 'success'){
+                                    $element.removeClass('not-started-tag in-progress-tag complete-tag on-hold-tag');
                 
                                     // Add the class based on the new status
                                     switch(params.value) {
@@ -64,6 +65,10 @@
                                             $element.addClass('on-hold-tag');
                                             break;
                                     }
+                                }else{
+                                    toastr.error(response.message);
+                                    $('#projects-table').DataTable().ajax.reload();
+                                }
                             },
                             error: function(xhr, status, error) {
                                 console.error('Failed to update status');

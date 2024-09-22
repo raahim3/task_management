@@ -22,6 +22,13 @@
             </ul>
         </li>
 
+        <li class="{{ request()->routeIs('admin.roles.*') ? 'mm-active' : '' }}">
+            <a href="{{ route('admin.roles.index') }}" class="waves-effect {{ request()->routeIs('admin.roles.index') ? 'mm-active' : '' }}">
+                <i class="mdi mdi-domain"></i>
+                <span>Roles</span>
+            </a>
+        </li>
+
         <li class="{{ request()->routeIs('admin.organizations.index') ? 'mm-active' : '' }} {{ request()->routeIs('admin.organizations.create') ? 'mm-active' : '' }} {{ request()->routeIs('admin.organizations.edit') ? 'mm-active' : '' }}">
             <a href="{{ route('admin.organizations.index') }}" class="waves-effect {{ request()->routeIs('admin.organizations.index') ? 'mm-active' : '' }}">
                 <i class="mdi mdi-domain"></i>
