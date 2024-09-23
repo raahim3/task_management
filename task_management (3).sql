@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 22, 2024 at 06:39 PM
+-- Generation Time: Sep 23, 2024 at 08:18 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -122,6 +122,7 @@ CREATE TABLE `generals` (
   `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `meta_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `primary_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -130,8 +131,8 @@ CREATE TABLE `generals` (
 -- Dumping data for table `generals`
 --
 
-INSERT INTO `generals` (`id`, `title`, `description`, `email`, `address`, `contact`, `footer_text`, `light_logo`, `dark_logo`, `favicon`, `meta_title`, `meta_description`, `keywords`, `created_at`, `updated_at`) VALUES
-(1, 'Task Management System', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum,', 'raahim32006@gmail.com', 'A-135 Asif Colony Bismillah Hotel', '+923470993615', '© 2024 Task Management System', NULL, NULL, 'Untitled design (1).png', 'Task Management System', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum,', 'task management , tms', NULL, '2024-09-22 05:33:41');
+INSERT INTO `generals` (`id`, `title`, `description`, `email`, `address`, `contact`, `footer_text`, `light_logo`, `dark_logo`, `favicon`, `meta_title`, `meta_description`, `keywords`, `primary_color`, `created_at`, `updated_at`) VALUES
+(1, 'Task Management System', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum,', 'raahim32006@gmail.com', 'A-135 Asif Colony Bismillah Hotel', '+923470993615', '© 2024 Task Management System', NULL, NULL, 'Untitled design (1).png', 'Task Management System', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum,', 'task management , tms', '#027a00', NULL, '2024-09-23 10:11:26');
 
 -- --------------------------------------------------------
 
@@ -169,7 +170,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2024_08_09_155718_create_tag_tasks_table', 1),
 (18, '2024_08_11_082342_create_project_users_table', 2),
 (21, '2024_09_22_093448_create_generals_table', 3),
-(22, '2024_09_22_161003_create_permissions_table', 4);
+(22, '2024_09_22_161003_create_permissions_table', 4),
+(23, '2024_09_23_153648_create_sections_table', 5);
 
 -- --------------------------------------------------------
 
@@ -379,6 +381,28 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (2, 'Admin', NULL, NULL),
 (3, 'Manager', NULL, NULL),
 (4, 'Developer', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sections`
+--
+
+CREATE TABLE `sections` (
+  `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sections`
+--
+
+INSERT INTO `sections` (`id`, `title`, `content`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'About US', '{\"text_1\":{\"value\":\"About Us\",\"label\":\"About Us\",\"type\":\"text\"},\"button_1\":{\"value\":\"Get Started\",\"label\":\"Get Started\",\"type\":\"button\"},\"text_3\":{\"value\":\"text_3\",\"label\":\"text_3\",\"type\":\"text\"},\"text_4\":{\"value\":\"text_4\",\"label\":\"text_4\",\"type\":\"text\"},\"image_1\":{\"value\":\"1855645316.png\",\"label\":\"image_1\",\"type\":\"image\"},\"s\":{\"value\":\"621077309.png\",\"label\":\"s\",\"type\":\"image\"}}', 1, '2024-09-23 14:27:39', '2024-09-23 15:14:17');
 
 -- --------------------------------------------------------
 
@@ -649,6 +673,12 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sections`
+--
+ALTER TABLE `sections`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
@@ -734,7 +764,7 @@ ALTER TABLE `generals`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `organizations`
@@ -777,6 +807,12 @@ ALTER TABLE `project_users`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `sections`
+--
+ALTER TABLE `sections`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`
