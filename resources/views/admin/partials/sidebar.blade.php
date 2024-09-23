@@ -42,6 +42,12 @@
                 <span>Plans</span>
             </a>
         </li>
+        <li class="{{ request()->routeIs('admin.sections.*') ? 'mm-active' : '' }}">
+            <a href="{{ route('admin.sections.index') }}" class="waves-effect {{ request()->routeIs('admin.sections.index') ? 'mm-active' : '' }}">
+                <i class="mdi mdi-folder"></i>
+                <span>Sections</span>
+            </a>
+        </li>
         <li class="{{ request()->routeIs('admin.settings.*') ? 'mm-active' : '' }}" >
             <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="mdi mdi-cog"></i>

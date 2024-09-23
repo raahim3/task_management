@@ -86,8 +86,16 @@
                         </div>
                         <div class="form-group mt-3">
                             <label for="keywords">Keywords</label>
-                            <input type="keywords" name="keywords" id="keywords" class="form-control" required value="{{ $settings->keywords }}">
+                            <input type="text" name="keywords" id="keywords" class="form-control" required value="{{ $settings->keywords }}">
                             @error('keywords')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <h4 class="card-title py-2 my-2 border-bottom">Color Theme</h4>
+                        <div class="form-group mt-3">
+                            <label for="primary_color">Primary Color</label>
+                            <input type="color" name="primary_color" id="primary_color" class="form-control" required value="{{ $settings->primary_color }}">
+                            @error('primary_color')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

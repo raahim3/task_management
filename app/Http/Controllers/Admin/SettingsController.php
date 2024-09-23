@@ -30,6 +30,7 @@ class SettingsController extends Controller
             $general->meta_description = $request->meta_description;
             $general->keywords = $request->keywords;
             $general->footer_text = $request->footer_text;
+            $general->primary_color = $request->primary_color;
             if($request->hasFile('light_logo')){
                 $file = $request->file('light_logo');
                 $filename = $file->getClientOriginalName();

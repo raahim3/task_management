@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('meta_title');
             $table->text('meta_description');
             $table->string('keywords');
+            $table->string('primary_color')->nullable();
             $table->timestamps();
         });
     }

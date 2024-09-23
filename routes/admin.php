@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\OrganizationsController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Models\Organization;
@@ -34,6 +35,9 @@ Route::middleware(['is_super_admin','auth'])->prefix('admin')->name('admin.')->g
     Route::resource('roles', RoleController::class);
     Route::any('roles/permissions/{id}',[RoleController::class,'permissions'])->name('roles.permissions');
 
+    // Section routes
+    Route::resource('sections', SectionController::class);
+    
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
 
