@@ -61,8 +61,8 @@
                                 @enderror
                             </div>
                             <div id="appendFields">
-                                @php( $fields = json_decode($section->content) )
-                                @foreach ($fields as $key =>  $field)
+                                
+                                @foreach (json_decode($section->content) as $key =>  $field)
                                 <?php                    
                                     $value_inp_type = $field->type === 'image' ? 'file' : 'text';
                                     $type_inp_name = $field->type === 'image' ? 'img_type[]' : 'type[]';
@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="mt-3 col-md-3">
                                         <label for="name">Name</label>
-                                        <input type="text" name="{{$name_inp_name}}" id="name" class="form-control inp_validate" value="{{ $key }}" required>
+                                        <input type="text" name="{{$name_inp_name}}" id="name" readonly class="form-control inp_validate" value="{{ $key }}" required>
                                         <small class="error"></small>
                                     </div>
                                     <div class="mt-3 col-md-3">
@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="mt-3 col-md-3">
                                     <label for="name">Name</label>
-                                    <input type="text" name="${name_inp_name}" id="name" class="form-control inp_validate" required>
+                                    <input type="text" name="${name_inp_name}" id="name" readonly class="form-control inp_validate" required>
                                     <small class="error"></small>
                                 </div>
                                 <div class="mt-3 col-md-3">

@@ -88,6 +88,7 @@ class SectionController extends Controller
             foreach ($request->img_name as $key => $img_name) {
                 // Check if an image file was uploaded
                 if ($request->img_value[$key] instanceof \Illuminate\Http\UploadedFile) {
+                    // Generate a unique filename
                     $ext = rand() . "." . $request->img_value[$key]->getClientOriginalExtension();
                     $request->img_value[$key]->move(public_path('sections'), $ext);
                 }
@@ -101,11 +102,10 @@ class SectionController extends Controller
                 ];
             }
         }
-
         // Update the section
         $section->title = $request->title;
         $section->status = $request->status;
-        $section->content = json_encode($fields);
+        $section->content = json_encode($fields, JSON_UNESCAPED_UNICODE);
         $section->save();
 
         return redirect()->route('admin.sections.index')->with('success', 'Section updated successfully.');

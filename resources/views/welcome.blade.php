@@ -3,35 +3,30 @@
     <!-- Navbar & Hero Start -->
     <div class="container-fluid header position-relative overflow-hidden p-0">
         <nav class="navbar navbar-expand-lg fixed-top navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand p-0">
-                <h1 class="display-6 text-primary m-0"><i class="fas fa-envelope me-3"></i>Mailler</h1>
-                <!-- <img src="{{ asset('frontend/img//logo.png') }}" alt="Logo"> -->
+            <a href="{{ url('/') }}" class="navbar-brand p-0">
+                @if($settings->light_logo)
+                    <img src="{{ asset('settings').'/'.$settings->light_logo }}" alt="Logo"> 
+                @else
+                    <h1 class="display-6 text-primary m-0">{{$settings->title}}</h1>
+                @endif
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Services</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="feature.html" class="dropdown-item">Features</a>
-                            <a href="pricing.html" class="dropdown-item">Pricing</a>
-                            <a href="blog.html" class="dropdown-item">Blog</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                    <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
+                    <a href="javaScript:void()" class="nav-item nav-link">About</a>
+                    <a href="javaScript:void()  " class="nav-item nav-link">Contact Us</a>
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-light border border-primary rounded-pill text-primary py-2 px-4 me-4">Log In</a>
-                <a href="{{ route('register') }}" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a>
+                @if (auth()->check())
+                <a href="{{ auth()->user()->role_id == 1 ? route('admin.index') : route('dashboard') }}" class="btn btn-primary rounded-pill text-white py-2 px-4">Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-light border border-primary rounded-pill text-primary py-2 px-4 me-4">Log In</a>
+                    <a href="{{ route('register') }}" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a>
+                @endif
             </div>
         </nav>
-
 
         <!-- Hero Header Start -->
         <div class="hero-header overflow-hidden px-5">
@@ -41,12 +36,12 @@
             </div>
             <div class="row gy-5 align-items-center">
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
-                    <h1 class="display-4 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">Turn Emails into Revenue</h1>
-                    <p class="fs-4 mb-4 wow fadeInUp" data-wow-delay="0.5s">Win new customers with the #1 email marketing and automations brand* that recommends ways to get more opens, clicks, and sales.</p>
-                    <a href="#" class="btn btn-primary rounded-pill py-3 px-5 wow fadeInUp" data-wow-delay="0.7s">Get Started</a>
+                    <h1 class="display-4 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">{{ $hero_section->main_heading->value }}</h1>
+                    <p class="fs-4 mb-4 wow fadeInUp" data-wow-delay="0.5s">{{ $hero_section->text->value }}</p>
+                    <a href="{{ $hero_section->btn->value }}" class="btn btn-primary rounded-pill py-3 px-5 wow fadeInUp" data-wow-delay="0.7s">{{ $hero_section->btn->label }}</a>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
-                    <img src="{{ asset('frontend/img/hero-img-1.png') }}" class="img-fluid w-100 h-100" alt="">
+                    <img src="{{ asset('sections').'/'.$hero_section->image->value }}" class="img-fluid w-100 h-100" alt="">
                 </div>
             </div>
         </div>
@@ -244,79 +239,43 @@
                 </p>
             </div>
             <div class="row g-5 justify-content-center">
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="price-item bg-light rounded text-center">
-                        <div class="text-center text-dark border-bottom d-flex flex-column justify-content-center p-4" style="width: 100%; height: 160px;">
-                            <p class="fs-2 fw-bold text-uppercase mb-0">BASIC</p>
-                            <div class="d-flex justify-content-center">
-                                <strong class="align-self-start">$</strong>
-                                <p class="mb-0"><span class="display-5">00</span>/mo</p>
-                            </div>                        
-                        </div>
-                        <div class="text-start p-5">
-                            <p><i class="fas fa-check text-success me-1"></i> Limited Acess Library</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Customer Support</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Pre-built Email Templates</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Reporting & Analytics</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Forms & Landing Pages</p>
-                            <p><i class="fas fa-check text-success me-1"></i> A/B Testing</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Email Scheduling</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Automated Customer Journeys</p>
-                            <p><i class="fas fa-times text-danger me-1"></i> Creative Assistant</p>
-                            <p class="mb-4"><i class="fas fa-times text-danger me-1"></i> Role-based Access</p>
-                            <button class="btn btn-light rounded-pill py-2 px-5" type="button">Get Started</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="price-item bg-light rounded text-center">
+                @foreach ($plans as $key => $plan)
+                <?php
+                    $color = ['text-dark','text-primary','text-secondary'];
+                ?>
+                    <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="price-item bg-light rounded text-center">
+                        @if($key == 1)
                         <div class="pice-item-offer">Popular</div>
-                        <div class="text-center text-primary border-bottom d-flex flex-column justify-content-center p-4" style="width: 100%; height: 160px;">
-                            <p class="fs-2 fw-bold text-uppercase mb-0">Standard</p>
-                            <div class="d-flex justify-content-center">
-                                <strong class="align-self-start">$</strong>
-                                <p class="mb-0"><span class="display-5">23</span>/mo</p>
-                            </div>                        
-                        </div>
-                        <div class="text-start p-5">
-                            <p><i class="fas fa-check text-success me-1"></i> Limited Acess Library</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Customer Support</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Pre-built Email Templates</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Reporting & Analytics</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Forms & Landing Pages</p>
-                            <p><i class="fas fa-check text-success me-1"></i> A/B Testing</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Email Scheduling</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Automated Customer Journeys</p>
-                            <p><i class="fas fa-times text-danger me-1"></i> Creative Assistant</p>
-                            <p class="mb-4"><i class="fas fa-times text-danger me-1"></i> Role-based Access</p>
-                            <button class="btn btn-light rounded-pill py-2 px-5" type="button">Get Started</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="price-item bg-light rounded text-center">
-                        <div class="text-center text-secondary border-bottom d-flex flex-column justify-content-center p-4" style="width: 100%; height: 160px;">
-                            <p class="fs-2 fw-bold text-uppercase mb-0">Premium</p>
-                            <div class="d-flex justify-content-center">
-                                <strong class="align-self-start">$</strong>
-                                <p class="mb-0"><span class="display-5">49</span>/mo</p>
-                            </div>                        
-                        </div>
-                        <div class="text-start p-5">
-                            <p><i class="fas fa-check text-success me-1"></i> Limited Acess Library</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Customer Support</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Pre-built Email Templates</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Reporting & Analytics</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Forms & Landing Pages</p>
-                            <p><i class="fas fa-check text-success me-1"></i> A/B Testing</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Email Scheduling</p>
-                            <p><i class="fas fa-check text-success me-1"></i> Automated Customer Journeys</p>
-                            <p><i class="fas fa-times text-danger me-1"></i> Creative Assistant</p>
-                            <p class="mb-4"><i class="fas fa-times text-danger me-1"></i> Role-based Access</p>
-                            <button class="btn btn-light rounded-pill py-2 px-5" type="button">Get Started</button>
+                        @endif
+                            <div class="text-center {{$color[$key]}} border-bottom d-flex flex-column justify-content-center p-4" style="width: 100%; height: 160px;">
+                                <p class="fs-2 fw-bold text-uppercase mb-0">{{ $plan->name }}</p>
+                                <div class="d-flex justify-content-center">
+                                    <strong class="align-self-start">$</strong>
+                                    <p class="mb-0"><span class="display-5">{{ number_format($plan->monthly_price, 2) }}</span>/mo</p>
+                                </div>                        
+                            </div>
+                            <div class="text-start p-5">
+                                <p><i class="fas fa-check text-success me-1"></i> {{ $plan->max_users }} Users</p>
+                                <p><i class="fas fa-check text-success me-1"></i> {{ $plan->max_projects }} Projects</p>
+                                <p><i class="fas fa-check text-success me-1"></i> {{ $plan->max_tasks }} Task <small>(Each Project)</small></p>
+                                @if(auth()->check())
+                                    @if(auth()->check() && $plan->id == 1)
+                                        @php($current_plan = auth()->user()->organization->subscriptions()->where('status', 1)->first())
+                                        <button class="text-white btn btn-primary w-100" disabled>Current Plan</button>
+                                    @elseif($plan->id == $current_plan->plan_id)
+                                        <a class="text-white btn btn-primary w-100 choose_btn" href="{{ route('plan.checkout', $plan->id) }}?duration=monthly">Renew</a>
+                                    @else
+                                        <a class="text-white btn btn-primary w-100 choose_btn" href="{{ route('plan.checkout', $plan->id) }}?duration=monthly">Choose</a>  
+                                    @endif
+                                @else
+                                    <a class="text-white btn btn-primary w-100 choose_btn" href="{{ route('plan.checkout', $plan->id) }}?duration=monthly">Choose</a>  
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
+                
             </div>
         </div>
     </div>

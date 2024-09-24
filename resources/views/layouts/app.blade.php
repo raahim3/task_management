@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Mailler - SaaS Website Template</title>
+        <title>{{ $settings->title }}</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -21,6 +21,7 @@
                 --bs-primary : {{ $settings->primary_color }};
             }
         </style>
+        <link rel="shortcut icon" href="{{ asset('settings').'/'.$settings->favicon }}">
         <!-- Libraries Stylesheet -->
         <link href="{{ asset('frontend/lib/animate/animate.min.css') }}" rel="stylesheet">
         <link href="{{ asset('frontend/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">

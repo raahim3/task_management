@@ -42,6 +42,16 @@
                 <span>Plans</span>
             </a>
         </li>
+        <li class="{{ request()->routeIs('admin.blogs.*') ? 'mm-active' : '' }} {{ request()->routeIs('admin.categories.*') ? 'mm-active' : '' }}" >
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="mdi mdi-newspaper"></i>
+                <span>Blog Management</span>
+            </a>
+            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                <li class="{{ request()->routeIs('admin.categories.index') ? 'mm-active' : '' }}"><a href="{{ route('admin.categories.index') }}">Categories</a></li>
+                <li class="{{ request()->routeIs('admin.blogs.index') ? 'mm-active' : '' }}"><a href="{{ route('admin.blogs.index') }}">All Blogs</a></li>
+            </ul>
+        </li>
         <li class="{{ request()->routeIs('admin.sections.*') ? 'mm-active' : '' }}">
             <a href="{{ route('admin.sections.index') }}" class="waves-effect {{ request()->routeIs('admin.sections.index') ? 'mm-active' : '' }}">
                 <i class="mdi mdi-folder"></i>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\TaskController;
 use App\Http\Controllers\Dashboard\TeamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Payments\StripeController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[SiteController::class,'index'])->name('home');
 
 Auth::routes();
 Route::middleware(['is_admin','check_subscription'])->group(function () {

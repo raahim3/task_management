@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\OrganizationsController;
 use App\Http\Controllers\Admin\PlanController;
@@ -37,6 +39,12 @@ Route::middleware(['is_super_admin','auth'])->prefix('admin')->name('admin.')->g
 
     // Section routes
     Route::resource('sections', SectionController::class);
+
+    // Blog Category Route
+    Route::resource('categories', CategoryController::class);
+    
+    // Blog Route
+    Route::resource('blogs', BlogController::class);
     
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
