@@ -58,16 +58,17 @@ class ProjectsDataTable extends DataTable
                                          alt="" class="img-fluid rounded-circle">
                                   </a>';
                 }
-                return '
-                    <div class="assignees-container">
-                        <div class="assignee_imgs">
-                            '.$assignee.'
-                            <a href="javascript:void(0)" class="add_pro_assi_btn assignee" data-type="project" data-id="'.$project->id.'" data-toggle="tooltip" data-placement="top" title="Add Assignee">
+                $html = '<div class="assignees-container">
+                            <div class="assignee_imgs">
+                                '.$assignee;
+                if(auth()->user()->hasPermission('add_assignees')){
+                    $html .= '<a href="javascript:void(0)" class="add_pro_assi_btn assignee" data-type="project" data-id="'.$project->id.'" data-toggle="tooltip" data-placement="top" title="Add Assignee">
                                 <i class="icon-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                ';
+                            </a>';
+                }
+                $html .= '</div></div>';
+
+                return $html;
             })            
             ->setRowId('id')
 

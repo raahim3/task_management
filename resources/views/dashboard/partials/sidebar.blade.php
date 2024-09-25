@@ -13,12 +13,14 @@
             <li class="dropdown">
                 <div class="d-flex justify-content-between a_alternative align-items-center">
                     <a href="{{ route('project.index') }}" wire:navigate style="pointer-events: auto !important"><i class="icon-grid mr-1"></i> Projects</a>
-                    <a class="dropdown-toggle dropdown-toggle-split hide_drop_icon create_project_icon" style="pointer-events: auto !important" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="icon-plus"></i>
-                    </a>
-                    <div class="dropdown-menu p-0">
-                        <a class="dropdown-item event_auto " href="{{ route('project.create') }}" wire:navigate><i class="icon-plus mr-2"></i> Add Project</a>
-                    </div>                
+                    @if(auth()->user()->hasPermission('project_create'))
+                        <a class="dropdown-toggle dropdown-toggle-split hide_drop_icon create_project_icon" style="pointer-events: auto !important" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-plus"></i>
+                        </a>
+                        <div class="dropdown-menu p-0">
+                            <a class="dropdown-item event_auto " href="{{ route('project.create') }}" wire:navigate><i class="icon-plus mr-2"></i> Add Project</a>
+                        </div> 
+                    @endif               
                 </div>
                 <ul>
                     @php

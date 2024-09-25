@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\DataTables\SubscriptionsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Payments\StripeController;
 use App\Models\Plan;
@@ -17,6 +18,9 @@ class PlanController extends Controller
     }
     public function checkout($id)
     {
+        if(auth()->user()->role_id != 2){
+            return redirect()->route('home')->with('error','Access Denied');
+        }
         $data['plan'] = Plan::find($id);
         return view('dashboard.plan.checkout',$data);
     }
@@ -65,5 +69,21 @@ class PlanController extends Controller
         ]);
         session()->forget('data');
         return true;
+    }
+
+    public function my_plans(SubscriptionsDataTable $dataTable){
+        return $dataTable->render('dashboard.plan.my_plans');
+    }
+
+    public function change_subscription(Request $request)
+    {
+        if(auth()->user()->role_id != 2){
+            return response()->json(['status' => 'error','message' => 'Access Denied']);
+        }
+        Subscription::where('organization_id',auth()->user()->organization->id)->update(['status' => 0]);
+        $subscription = Subscription::find($request->plan_id);
+        $subscription->status = 1;
+        $subscription->save();
+        return response()->json(['status' => 'success']);
     }
 }

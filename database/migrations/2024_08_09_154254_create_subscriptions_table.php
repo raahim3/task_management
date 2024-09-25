@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('organization_id')->constrained();
             $table->foreignId('plan_id')->constrained();
             $table->text('plan_data')->nullable();
+            $table->syring('payment_method')->nullable();
+            $table->bigInteger('using_days')->nullable();
             $table->boolean('status');
             $table->timestamps();
         });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CronJobsController;
 use App\Http\Controllers\Dashboard\CommentController;
 use App\Http\Controllers\Dashboard\PlanController;
 use App\Http\Controllers\Dashboard\ProjectController;
@@ -59,4 +60,11 @@ Route::middleware('auth')->group(function () {
     Route::post('plan/checkout/{id}',[PlanController::class,'checkout_process'])->name('plan.checkout.process');
     Route::get('stripe/checkout/success',[StripeController::class,'success'])->name('stripe.checkout.success');
     Route::get('stripe/checkout/cancel',[StripeController::class,'cancel'])->name('stripe.checkout.cancel'); 
+    Route::get('my/subscriptions',[PlanController::class,'my_plans'])->name('plan.my_plans');
+    Route::post('subscription/change',[PlanController::class,'change_subscription'])->name('change.subscription');
+
 });
+
+
+// Cron Jobs
+Route::get('/analyse_subscriptions',[CronJobsController::class,'analyse_subscriptions'])->name('analyse_subscriptions');

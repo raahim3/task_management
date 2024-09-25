@@ -38,6 +38,7 @@
         <link rel="stylesheet" href="{{ asset('assets//vendors/select2/css/select2.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('assets//vendors/select2/css/select2-bootstrap.min.css') }}"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert/sweetalert.css') }}">
         <!-- END: Page CSS-->
 
         <!-- START: Custom CSS-->
@@ -204,6 +205,7 @@
         <script src="{{ asset('assets/vendors/select2/js/select2.full.min.js') }}"></script>
         {{-- <script src="{{ asset('assets//js/select2.script.js') }}"></script> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="{{ asset('assets/vendors/sweetalert/sweetalert.min.js') }}"></script>
 
         
         <!-- START: Page JS-->

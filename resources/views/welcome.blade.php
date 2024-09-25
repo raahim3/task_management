@@ -56,15 +56,15 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="RotateMoveLeft">
-                        <img src="{{ asset('frontend/img//about-1.png') }}" class="img-fluid w-100" alt="">
+                        <img src="{{ asset('sections').'/'.$about_section->image->value }}" class="img-fluid w-100" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <h4 class="mb-1 text-primary">About Us</h4>
-                    <h1 class="display-5 mb-4">Get Started Easily With a Personalized Product Tour</h1>
-                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, suscipit itaque quaerat dicta porro illum, autem, molestias ut animi ab aspernatur dolorum officia nam dolore. Voluptatibus aliquam earum labore atque.
+                    <h4 class="mb-1 text-primary">{{ $about_section->sub_heading->value }}</h4>
+                    <h1 class="display-5 mb-4">{{ $about_section->main_heading->value }}</h1>
+                    <p class="mb-4">{{ $about_section->text->value }}
                     </p>
-                    <a href="#" class="btn btn-primary rounded-pill py-3 px-5">About More</a>
+                    <a href="{{ $about_section->about_more->value }}" class="btn btn-primary rounded-pill py-3 px-5">{{ $about_section->about_more->label }}</a>
                 </div>
             </div>
         </div>
@@ -130,36 +130,35 @@
             <div class="row g-5 pt-5" style="margin-top: 6rem;">
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
                     <div class="feature-img RotateMoveLeft h-100" style="object-fit: cover;">
-                        <img src="{{ asset('frontend/img//features-1.png') }}" class="img-fluid w-100 h-100" alt="">
+                        <img src="{{ asset('seccions').'/'.$feature_section->image->value }}" class="img-fluid w-100 h-100" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.1s">
-                    <h4 class="text-primary">Fearutes</h4>
-                    <h1 class="display-5 mb-4">Push Your Visitors Into Happy Customers</h1>
-                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, suscipit itaque quaerat dicta porro illum, autem, molestias ut animi ab aspernatur dolorum officia nam dolore. Voluptatibus aliquam earum labore atque.
-                    </p>
+                    <h4 class="text-primary">{{ $feature_section->sub_heading->value }}</h4>
+                    <h1 class="display-5 mb-4">{{ $feature_section->main_heading->value }}</h1>
+                    <p class="mb-4">{{ $feature_section->text->value }}</p>
                     <div class="row g-4">
                         <div class="col-6">
                             <div class="d-flex">
-                                <i class="fas fa-newspaper fa-4x text-secondary"></i>
+                                <i class="{{ $feature_section->icon_1->value }} fa-4x text-secondary"></i>
                                 <div class="d-flex flex-column ms-3">
-                                    <h2 class="mb-0 fw-bold">285</h2>
-                                    <small class="text-dark">Created Projects</small>
+                                    <h2 class="mb-0 fw-bold">{{ $feature_section->number_1->value }}</h2>
+                                    <small class="text-dark">{{ $feature_section->label_1->value }}</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="d-flex">
-                                <i class="fas fa-users fa-4x text-secondary"></i>
+                                <i class="{{ $feature_section->icon_2->value }} fa-4x text-secondary"></i>
                                 <div class="d-flex flex-column ms-3">
-                                    <h2 class="mb-0 fw-bold">6560</h2>
-                                    <small class="text-dark">Happy Clients</small>
+                                    <h2 class="mb-0 fw-bold">{{ $feature_section->number_2->value }}</h2>
+                                    <small class="text-dark">{{ $feature_section->label_2->value }}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="my-4">
-                        <a href="#" class="btn btn-primary rounded-pill py-3 px-5">Read More</a>
+                        <a href="{{ $feature_section->btn->value }}" class="btn btn-primary rounded-pill py-3 px-5">{{ $feature_section->btn->label }}</a>
                     </div>
                 </div>
             </div>
@@ -177,42 +176,39 @@
                         <div class="accordion-item border-0 mb-4">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseTOne">
-                                    Why did you choose Our Email Services?
+                                    {{ $faq_section->ques_1->value }}
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body my-2">
-                                    <h5>Dolor sit amet consectetur adipisicing elit.</h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nemo impedit, sapiente quis illo quia nulla atque maxime fuga minima ipsa quae cum consequatur, sit, delectus exercitationem odit officiis maiores! Neque, quidem corrupti modi architecto eos saepe incidunt dignissimos rerum.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta distinctio hic fuga odio excepturi ducimus sequi at. Doloribus, non aspernatur.</p>
+                                    <h5>{{ $faq_section->ans_head_1->value }}</h5>
+                                    <p>{{ $faq_section->ans_text_2->value }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item border-0 mb-4">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Are there any hidden charges? 
+                                    {{ $faq_section->ques_2->value }} 
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body my-2">
-                                    <h5>Dolor sit amet consectetur adipisicing elit.</h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nemo impedit, sapiente quis illo quia nulla atque maxime fuga minima ipsa quae cum consequatur, sit, delectus exercitationem odit officiis maiores! Neque, quidem corrupti modi architecto eos saepe incidunt dignissimos rerum.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta distinctio hic fuga odio excepturi ducimus sequi at. Doloribus, non aspernatur.</p>
+                                    <h5>{{ $faq_section->ans_head_2->value }}</h5>
+                                    <p>{{ $faq_section->ans_text_2->value }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item border-0">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    What are the key challenges of email marketing?
+                                    {{ $faq_section->ques_3->value }}
                                 </button>
                             </h2>
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                 <div class="accordion-body my-2">
-                                    <h5>Dolor sit amet consectetur adipisicing elit.</h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nemo impedit, sapiente quis illo quia nulla atque maxime fuga minima ipsa quae cum consequatur, sit, delectus exercitationem odit officiis maiores! Neque, quidem corrupti modi architecto eos saepe incidunt dignissimos rerum.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta distinctio hic fuga odio excepturi ducimus sequi at. Doloribus, non aspernatur.</p>
+                                    <h5>{{ $faq_section->ans_head_3->value }}</h5>
+                                    <p>{{ $faq_section->ans_text_3->value }}</p>
                                 </div>
                             </div>
                         </div>
@@ -233,9 +229,10 @@
     <div class="container-fluid price py-5">
         <div class="container py-5">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                <h4 class="text-primary">Pricing Plan</h4>
-                <h1 class="display-5 mb-4">Not Sure Which Plan Is For You?</h1>
-                <p class="mb-0">Dolor sit amet consectetur, adipisicing elit. Ipsam, beatae maxime. Vel animi eveniet doloremque reiciendis soluta iste provident non rerum illum perferendis earum est architecto dolores vitae quia vero quod incidunt culpa corporis, porro doloribus. Voluptates nemo doloremque cum.
+                <h4 class="text-primary">{{ $plan_section->sub_heading->value }}</h4>
+                <h1 class="display-5 mb-4">{{ $plan_section->main_heading->value }}</h1>
+                <p class="mb-0">
+                    {{ $plan_section->text->value }}
                 </p>
             </div>
             <div class="row g-5 justify-content-center">
@@ -286,88 +283,34 @@
     <div class="container-fluid blog py-5">
         <div class="container py-5">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                <h4 class="text-primary">Our Blog</h4>
-                <h1 class="display-5 mb-4">Join Us For New Blog</h1>
-                <p class="mb-0">Dolor sit amet consectetur, adipisicing elit. Ipsam, beatae maxime. Vel animi eveniet doloremque reiciendis soluta iste provident non rerum illum perferendis earum est architecto dolores vitae quia vero quod incidunt culpa corporis, porro doloribus. Voluptates nemo doloremque cum.
+                <h4 class="text-primary">{{ $blog_section->sub_heading->value }}</h4>
+                <h1 class="display-5 mb-4">{{ $blog_section->main_heading->value }}</h1>
+                <p class="mb-0">
+                    {{ $blog_section->text->value }}
                 </p>
             </div>
             <div class="row g-4 justify-content-center">
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="blog-item">
-                        <div class="blog-img">
-                            <img src="{{ asset('frontend/img//blog-1.png') }}" class="img-fluid w-100" alt="">
-                            <div class="blog-info">
-                                <span><i class="fa fa-clock"></i> Dec 01.2024</span>
-                                <div class="d-flex">
-                                    <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
-                                    <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
+                @foreach ($blogs as $blog)
+                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="blog-item">
+                            <div class="blog-img">
+                                <img src="{{ asset('blogs').'/'.$blog->image ?? '' }}" class="img-fluid w-100" alt="">
+                                <div class="blog-info">
+                                    <span><i class="fa fa-clock"></i> {{ $blog->created_at->diffForHumans() }}</span>
+                                    <div class="d-flex">
+                                        <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
+                                        <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="blog-content text-dark border p-4 ">
-                            <h5 class="mb-4">Dolor, sit amet consectetur adipisicing</h5>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectur adip sed eiusmod amet consectur adip.</p>
-                            <a class="btn btn-light rounded-pill py-2 px-4" href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="blog-item">
-                        <div class="blog-img">
-                            <img src="{{ asset('frontend/img//blog-2.png') }}" class="img-fluid w-100" alt="">
-                            <div class="blog-info">
-                                <span><i class="fa fa-clock"></i> Dec 01.2024</span>
-                                <div class="d-flex">
-                                    <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
-                                    <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
-                                </div>
+                            <div class="blog-content text-dark border p-4 ">
+                                <h5 class="mb-4">{{ substr($blog->title, 0, 50) }}</h5>
+                                <p class="mb-4">{{ substr($blog->description, 0, 100) }}</p>
+                                <a class="btn btn-light rounded-pill py-2 px-4" href="#">Read More</a>
                             </div>
                         </div>
-                        <div class="blog-content text-dark border p-4 ">
-                            <h5 class="mb-4">Dolor, sit amet consectetur adipisicing</h5>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectur adip sed eiusmod amet consectur adip.</p>
-                            <a class="btn btn-light rounded-pill py-2 px-4" href="#">Read More</a>
-                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="blog-item">
-                        <div class="blog-img">
-                            <img src="{{ asset('frontend/img//blog-3.png') }}" class="img-fluid w-100" alt="">
-                            <div class="blog-info">
-                                <span><i class="fa fa-clock"></i> Dec 01.2024</span>
-                                <div class="d-flex">
-                                    <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
-                                    <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="blog-content text-dark border p-4 ">
-                            <h5 class="mb-4">Dolor, sit amet consectetur adipisicing</h5>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectur adip sed eiusmod amet consectur adip.</p>
-                            <a class="btn btn-light rounded-pill py-2 px-4" href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="blog-item">
-                        <div class="blog-img">
-                            <img src="{{ asset('frontend/img//blog-4.png') }}" class="img-fluid w-100" alt="">
-                            <div class="blog-info">
-                                <span><i class="fa fa-clock"></i> Dec 01.2024</span>
-                                <div class="d-flex">
-                                    <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
-                                    <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="blog-content text-dark border p-4 ">
-                            <h5 class="mb-4">Dolor, sit amet consectetur adipisicing</h5>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectur adip sed eiusmod amet consectur adip.</p>
-                            <a class="btn btn-light rounded-pill py-2 px-4" href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -378,9 +321,10 @@
     <div class="container-fluid testimonial py-5">
         <div class="container py-5">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                <h4 class="text-primary">Testimonial</h4>
-                <h1 class="display-5 mb-4">What Our Client Say About Us</h1>
-                <p class="mb-0">Dolor sit amet consectetur, adipisicing elit. Ipsam, beatae maxime. Vel animi eveniet doloremque reiciendis soluta iste provident non rerum illum perferendis earum est architecto dolores vitae quia vero quod incidunt culpa corporis, porro doloribus. Voluptates nemo doloremque cum.
+                <h4 class="text-primary">{{ $testimonial_section->sub_heading->value }}</h4>
+                <h1 class="display-5 mb-4">{{ $testimonial_section->main_heading->value }}</h1>
+                <p class="mb-0">
+                    {{ $testimonial_section->text->value }}
                 </p>
             </div>
             <div class="testimonial-carousel owl-carousel wow zoomInDown" data-wow-delay="0.2s">

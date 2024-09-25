@@ -6,6 +6,7 @@ use App\DataTables\Admin\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -37,6 +38,7 @@ class CategoryController extends Controller
 
         $category = new Category();
         $category->title = $request->title;
+        $category->slug = Str::slug($request->title);
         $category->save();
         return redirect()->route('admin.categories.index')->with('success','Cateory Created Successfully');
     }
@@ -69,6 +71,7 @@ class CategoryController extends Controller
 
         $category = Category::find($id);
         $category->title = $request->title;
+        $category->slug = Str::slug($request->title);
         $category->update();
         return redirect()->route('admin.categories.index')->with('success','Cateory Updated Successfully');
     }

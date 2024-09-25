@@ -137,11 +137,13 @@
                             <a href="#" class="dropdown-item px-2 align-self-center d-flex">
                                 <span class="icon-user mr-2 h6 mb-0"></span> View Profile</a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item px-2 align-self-center d-flex">
-                                <span class="icon-support mr-2 h6  mb-0"></span> My Plan</a>
-                            <a href="{{ route('plan.index') }}" wire:navigate class="dropdown-item px-2 align-self-center d-flex">
-                                <span class="icon-globe mr-2 h6 mb-0"></span> Plans</a>
-                            <a href="#" class="dropdown-item px-2 align-self-center d-flex">
+                                @if(auth()->user()->role_id == 2)
+                                    <a href="{{ route('plan.my_plans') }}" class="dropdown-item px-2 align-self-center d-flex">
+                                        <span class="icon-support mr-2 h6  mb-0"></span> My Subscriptions</a>
+                                    <a href="{{ route('plan.index') }}" wire:navigate class="dropdown-item px-2 align-self-center d-flex">
+                                    <span class="icon-globe mr-2 h6 mb-0"></span> Plans</a>
+                                @endif
+                                <a href="#" class="dropdown-item px-2 align-self-center d-flex">
                                 <span class="icon-settings mr-2 h6 mb-0"></span> Account Settings</a>
                             <div class="dropdown-divider"></div>
                             <form action="{{ route('logout') }}" method="post">

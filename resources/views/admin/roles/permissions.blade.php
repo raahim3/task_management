@@ -64,6 +64,17 @@
                             <td><input type="checkbox" name="task_delete" value="1" {{ in_array('task_delete',$all_permissions) ? 'checked' : '' }}></td>
                         </tr>
                     </table>
+                    <h4>Other Permissions</h4>
+                    <table class="table table-bordered permission-table">
+                        <thead>
+                            <tr>
+                                <th>Add Assignees</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td><input type="checkbox" name="add_assignees" value="1" {{ in_array('add_assignees',$all_permissions) ? 'checked' : '' }}></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary" type="submit">Save</button>
