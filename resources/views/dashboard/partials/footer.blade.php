@@ -1,3 +1,3 @@
 <footer class="site-footer">
-    2020 &copy; PICK
+    {{ $settings->footer_text }}
 </footer>

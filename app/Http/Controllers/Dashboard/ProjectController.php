@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Dashboard;
 use App\DataTables\ProjectsDataTable;
 use App\DataTables\ProjectTaskDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Projects;
 use App\Models\ProjectUser;
 use App\Models\Task;
+use App\Models\TaskUser;
 use App\Models\User;
 use Illuminate\Support\Str;
 
@@ -105,7 +107,43 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(!auth()->user()->hasPermission('project_delete')){
+            return response()->json(['status' => 'error','message' => 'You are not allowed to access this feature']);
+        }
+
+        try {
+            $project = Projects::find($id);
+
+            if ($project) {
+                ProjectUser::where('project_id', $id)->delete();
+                $tasks = Task::where('project_id', $id)->with('files')->get();
+
+                foreach ($tasks as $task) {
+                    TaskUser::where('task_id', $task->id)->delete();
+                    
+                    Comment::where('task_id', $task->id)->delete();
+                    
+                    foreach ($task->files as $file) {
+                        $path = public_path($file->path);
+                        if (file_exists($path)) {
+                            unlink($path);
+                        }
+                        $file->delete();
+                    }
+
+                    $task->delete();
+                }
+
+                $project->delete();
+
+                return response()->json(['status' => 'success', 'message' => 'Project deleted successfully']);
+            }
+
+            return response()->json(['status' => 'error', 'message' => 'Project not found']);
+
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error','message' => $th->getMessage()]);
+        }
     }
 
     public function change_status(Request $request)

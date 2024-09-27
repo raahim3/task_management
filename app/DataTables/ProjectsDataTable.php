@@ -24,7 +24,15 @@ class ProjectsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('name', function ($project) {
-                return '<a href="'.route('project.show', $project->id).'" wire:navigate>'.$project->name.'</a>';
+                $html = '<a href="'.route('project.show', $project->id).'" wire:navigate>'.$project->name.'</a><br>';
+                if(auth()->user()->hasPermission('project_edit')){
+                    $html .= '<a href="javascript:void(0)" class="edit_project" data-id="'.$project->id.'">Edit</a>';
+                }
+
+                if(auth()->user()->hasPermission('project_delete')){
+                    $html .= '<a href="#" class="delete_project text-danger" data-id="'.$project->id.'"> - Delete</a>';
+                }
+                return $html;
             })
             ->addColumn('status', function ($project) {
                 if($project->status == 'in_progress'){

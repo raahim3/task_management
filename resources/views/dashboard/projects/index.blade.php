@@ -186,6 +186,42 @@
                     }
                 });
             });
+            $(document).on('click', '.delete_project', function() {
+                var id = $(this).data('id');
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: "{{ route('project.destroy', ':id') }}".replace(':id', id),  
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: id 
+                            },
+                            success: function(response) {
+                                if(response.status == 'success'){
+                                    $('#projects-table_wrapper').DataTable().ajax.reload();
+                                    intTooltip();
+                                    toastr.success(response.message);
+                                }
+                                if(response.status == 'error'){
+                                    toastr.error(response.message);
+                                }
+                            },
+                            error: function(xhr) {
+                                swal("Oops!", "Something went wrong. Please try again later.", "error");
+                            }
+                        });
+                    }
+                })
+            });
 
 
         });

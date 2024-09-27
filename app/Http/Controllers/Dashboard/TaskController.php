@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\File;
 use App\Models\Task;
 use App\Models\TaskUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+
+use function Termwind\render;
 
 class TaskController extends Controller
 {
@@ -35,6 +38,9 @@ class TaskController extends Controller
         $count_task = Task::where('project_id',$request->project_id)->count();
         if($count_task >= auth()->user()->subscription_plan()->max_tasks){
             return response()->json(['status' => 'error','message' => 'Your plan does not support more than '.auth()->user()->subscription_plan()->max_tasks.' tasks in a project']);
+        }
+        if(!auth()->user()->hasPermission('task_create')){
+            return response()->json(['status' => 'error','message' => 'You are not allowed to access this feature']);
         }
         $request->validate([
             'title' => 'required',
@@ -83,7 +89,11 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        
+
+        $task = Task::with('users','project','comments','files')->find($id);
+        $assignees = User::with('role')->where('organization_id',auth()->user()->organization->id)->where('id','!=',auth()->user()->id)->where('status',1)->take(15)->get();
+        $assignee_ids = $task->users->pluck('id')->toArray();
+        return view('dashboard.tasks.edit', compact('task','assignees','assignee_ids'))->render();
     }
 
     /**
@@ -91,7 +101,41 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        if(!auth()->user()->hasPermission('task_edit')){
+            return response()->json(['status' => 'error','message' => 'You are not allowed to access this feature']);
+        }
+        $request->validate([
+            'title' => 'required',
+            'due_date' => 'required',
+            'status' => 'required',
+            'priority' => 'required',
+            'project_id' => 'required',
+        ]);
+
+        $task = Task::find($id);
+        $task->name = $request->title;
+        $task->project_id = $request->project_id;
+        $task->due_date = $request->due_date;
+        $task->status = $request->status;
+        $task->priority = $request->priority;
+        $task->description = $request->description;
+        $task->user_id = auth()->user()->id;
+        $task->save();
+        if($request->assignees){
+            TaskUser::where('task_id',$task->id)->delete();
+            foreach ($request->assignees as $key => $assignee) {
+                $exist = TaskUser::where('task_id',$task->id)->where('user_id',$assignee)->first();
+                if(!$exist){
+                    $project = new TaskUser();
+                    $project->task_id = $task->id;
+                    $project->user_id = $assignee;
+                    $project->project_id = $request->project_id;
+                    $project->save();                              
+                }
+            }
+        }
+
+        return response()->json(['status' => 'success']);
     }
 
     /**
@@ -99,7 +143,27 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(!auth()->user()->hasPermission('task_delete')){
+            return response()->json(['status' => 'error','message' => 'You are not allowed to access this feature']);
+        }
+        try{
+            $task = Task::find($id);
+            TaskUser::where('task_id',$task->id)->delete();
+            Comment::where('task_id',$task->id)->delete();
+            $files = File::where('task_id',$task->id)->get();
+            foreach($files as $file){
+                $path = public_path($file->path);
+                if(file_exists($path)){
+                    unlink($path);
+                }
+                $file->delete();
+            }
+            $task->delete();
+            return response()->json(['status' => 'success','message' => 'Task deleted successfully']);  
+        }
+         catch (\Throwable $th) {
+            return response()->json(['status' => 'error','message' => $th->getMessage()]);
+        }
     }
 
     public function add_assignees(Request $request)

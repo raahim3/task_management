@@ -24,8 +24,18 @@ class ProjectTaskDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('name', function ($task) {
-                return '<a href="#" class="show_task" data-id="'.$task->id.'">'.$task->name.'</a>';
-            })
+                $html = '<a href="#" class="show_task" data-id="'.$task->id.'">'.$task->name.'</a><br>
+                        <a href="'. route('project.show', $task->project->id) .'" class="text-primary">#'.$task->project->name.'</a>';
+                
+                if(auth()->user()->hasPermission('task_edit')){
+                    $html .= '<a href="javascript:void(0)" class="edit_task" data-id="'.$task->id.'"> - Edit</a>';
+                }
+
+                if(auth()->user()->hasPermission('task_delete')){
+                    $html .= '<a href="#" class="delete_task text-danger" data-id="'.$task->id.'"> - Delete</a>';
+                }
+                        return $html;
+                })
             ->addColumn('priority', function ($task) {
                 if($task->priority == 'low'){
                     $priority = 'bg-success';

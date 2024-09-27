@@ -81,6 +81,13 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <form action="" method="post" id="edit_task_form"></form>
+      </div>
+    </div>
+  </div>
 @endSection
 @section('script')
     {{ $dataTable->scripts() }}
@@ -314,6 +321,92 @@
                     }
                 });
             });
+            $(document).on('click', '.edit_task', function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('task.edit', ':id') }}".replace(':id', $(this).data('id')),
+                    type: "GET",
+                    success: function(data) {
+                        var update_url = "{{ route('task.update', ':id') }}".replace(':id', id);
+                        $('#edit_task_form').html(data);
+                        intSummernote();
+                        intSelect2();
+                        $('#editTask').modal('show');
+                        $('#edit_task_form').attr('action', update_url);
+
+                    }
+                });
+            });
+            $('#edit_task_form').submit(function(e){
+                e.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+                var method = form.attr('method');
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function(){
+                        $('#updateTaskBtn').prop('disabled',true).text('Updating...');
+                    },
+                    success: function(data){
+                        if(data.status == 'success'){
+                            $('#editTask').modal('hide');
+                            $('#edit_task_form')[0].reset();
+                            $('#projecttask-table').DataTable().ajax.reload();
+                            intTooltip();
+                        }
+                        if(data.status == 'error'){
+                            toastr.error(data.message);
+                        }
+                    },
+                    complete: function(){
+                        $('#updateTaskBtn').prop('disabled',false).text('Update');
+                    }
+                });
+            });
+
+            $(document).on('click', '.delete_task', function() {
+                var id = $(this).data('id');
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: "{{ route('task.destroy', ':id') }}".replace(':id', id),  
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: id 
+                            },
+                            success: function(response) {
+                                if(response.status == 'success'){
+                                    $('#projecttask-table').DataTable().ajax.reload();
+                                    intTooltip();
+                                    toastr.success(response.message);
+                                }
+                                if(response.status == 'error'){
+                                    toastr.error(response.message);
+                                }
+                            },
+                            error: function(xhr) {
+                                swal("Oops!", "Something went wrong. Please try again later.", "error");
+                            }
+                        });
+                    }
+                })
+            });
+            
         });
     </script>
 @endsection
