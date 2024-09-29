@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Comment;
 use App\Models\File;
 use App\Models\Task;
@@ -71,6 +72,13 @@ class TaskController extends Controller
                 }
             }
         }
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'task',
+            'related_id' => $task->id,
+            'content' => 'Created a new task',
+            'organization_id' => auth()->user()->organization->id
+        ]);
 
         return response()->json(['status' => 'success']);
     }
@@ -159,6 +167,13 @@ class TaskController extends Controller
                 $file->delete();
             }
             $task->delete();
+            ActivityLog::create([
+                'user_id' => auth()->user()->id,
+                'type' => 'task',
+                'related_id' => $task->id,
+                'content' => 'Deleted a task '.$task->name,
+                'organization_id' => auth()->user()->organization->id
+            ]);
             return response()->json(['status' => 'success','message' => 'Task deleted successfully']);  
         }
          catch (\Throwable $th) {
@@ -172,12 +187,19 @@ class TaskController extends Controller
         if($exist){
             return response()->json(['status' => 'error','message' => 'User already added']);                               
         }
-        $project = new TaskUser();
-        $project->task_id = $request->task_id;
-        $project->user_id = $request->user_id;
-        $project->project_id = $request->project_id;
-        $project->save();
+        $task = new TaskUser();
+        $task->task_id = $request->task_id;
+        $task->user_id = $request->user_id;
+        $task->project_id = $request->project_id;
+        $task->save();
         $user = User::find($request->user_id);
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'task',
+            'related_id' => $task->id,
+            'content' => 'Assigned a user '.$user->name,
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success','user'=>$user]);
     }
     public function change_priority(Request $request)
@@ -185,6 +207,13 @@ class TaskController extends Controller
         $task = Task::find($request->id);
         $task->priority = $request->priority;
         $task->save();
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'task',
+            'related_id' => $task->id,
+            'content' => 'Changed priority to '.formatText($request->priority),
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success']);
     }
 
@@ -193,6 +222,13 @@ class TaskController extends Controller
         $task = Task::find($request->id);
         $task->status = $request->status;
         $task->save();
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'task',
+            'related_id' => $task->id,
+            'content' => 'Changed status to '.formatText($request->status),
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success']);
     }
     public function uploadFile(Request $request,$id){
@@ -211,6 +247,13 @@ class TaskController extends Controller
         $file_create->path = 'uploads/' . $filename;
         $file_create->file_type = $generalType;
         $file_create->save();
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'task',
+            'related_id' => $id,
+            'content' => 'Added a file '.$file_create->name,
+            'organization_id' => auth()->user()->organization->id
+        ]);
 
         return response()->json(['success' => $file_create->id]);
     }
@@ -222,6 +265,13 @@ class TaskController extends Controller
             unlink($path);
         }
         $file->delete();
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'task',
+            'related_id' => $id,
+            'content' => 'Deleted a file '.$file->name,
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success']);
     }
     public function updateDescription(Request $request,$id){

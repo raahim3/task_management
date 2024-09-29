@@ -83,4 +83,9 @@ class User extends Authenticatable
         return in_array($permission, $permissions);
     }
 
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+
 }

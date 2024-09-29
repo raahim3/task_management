@@ -23,23 +23,23 @@
     }
 </style>
     <section id="create_project_section">
-        <a href="{{ route('home') }}" wire:navigate class="back_project"><i class="icon-close"></i></a>
+        <a href="{{ route('dashboard') }}" wire:navigate class="back_project"><i class="icon-close"></i></a>
         <div class="row h-100 justify-content-center align-items-center">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <h3 class="card-title text-center">New Project</h3>
                 <div class="card create_project_card">
                     <div class="card-body">
                         <form action="{{ route('project.store') }}" method="POST" id="project_form">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label for="">Project Name</label>
                                     <input type="text" class="form-control" required name="project_name" placeholder="Project Name....">
                                     @error('project_name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label for="">Color</label>
                                     <input type="color" class="form-control" name="color" required>
                                     @error('color')
@@ -57,6 +57,13 @@
                                     <label for="">End Date</label>
                                     <input type="date" class="form-control" name="end_date" required >
                                     @error('end_date')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="">Description</label>
+                                    <textarea name="description" id="description" class="form-control summernote" cols="30" rows="10"></textarea>
+                                    @error('description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>

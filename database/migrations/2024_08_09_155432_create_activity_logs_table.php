@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('organization_id')->constrained();
             $table->enum('type', ['project', 'task', 'comment', 'file', 'user']);
             $table->text('content');
             $table->bigInteger('related_id')->nullable();

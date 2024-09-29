@@ -204,6 +204,7 @@
                         if(data.status == 'success'){
                             $('#createTask').modal('hide');
                             $('#create_task_form')[0].reset();
+                            $('.modal-backdrop').removeClass('show');
                             $('#projecttask-table').DataTable().ajax.reload();
                         }
                         if(data.status == 'error'){

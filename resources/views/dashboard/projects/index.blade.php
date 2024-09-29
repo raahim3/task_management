@@ -17,6 +17,13 @@
     </div>
 </div>
 
+<div class="modal fade" id="editProject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <form action="" method="post" id="edit_project_form"></form>
+      </div>
+    </div>
+  </div>
 @endSection
 
 @section('script')
@@ -78,10 +85,10 @@
                 });
            }, 4000);
            $(document).on('click', '.add_pro_assi_btn', function(e) {
-            e.stopPropagation();
-            project_id = $(this).data('id');
-            var type = $(this).data('type');
-            var _this = $(this);
+                e.stopPropagation();
+                project_id = $(this).data('id');
+                var type = $(this).data('type');
+                var _this = $(this);
                 $.ajax({
                     url:"{{ route('get.assignees') }}",
                     type:"POST",
@@ -222,7 +229,54 @@
                     }
                 })
             });
+            $(document).on('click','.edit_project',function(){
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('project.edit', ':id') }}".replace(':id', $(this).data('id')),
+                    type: "GET",
+                    success: function(data) {
+                        var update_url = "{{ route('project.update', ':id') }}".replace(':id', id);
+                        $('#edit_project_form').html(data);
+                        intSummernote();
+                        intSelect2();
+                        $('#editProject').modal('show');
+                        $('#edit_project_form').attr('action', update_url);
 
+                    }
+                });
+            });
+            $('#edit_project_form').submit(function(e){
+                e.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+                var method = form.attr('method');
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function(){
+                        $('#updateProjectBtn').prop('disabled',true).text('Updating...');
+                    },
+                    success: function(data){
+                        if(data.status == 'success'){
+                            $('#editProject').modal('hide');
+                            $('#edit_project_form')[0].reset();
+                            $('#projects-table').DataTable().ajax.reload();
+                            intTooltip();
+                        }
+                        if(data.status == 'error'){
+                            toastr.error(data.message);
+                        }
+                    },
+                    complete: function(){
+                        $('#updateProjectBtn').prop('disabled',false).text('Update');
+                    }
+                });
+            });
 
         });
     </script>

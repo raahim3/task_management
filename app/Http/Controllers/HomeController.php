@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,6 +28,28 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function activities()
+    {
+        $userId = auth()->id(); 
+        if(auth()->user()->role_id == 2){
+            $activities = ActivityLog::where('organization_id',auth()->user()->organization->id)->orderBy('created_at', 'desc')->get();
+        }
+        else{
+            $activities = ActivityLog::whereHas('project.users', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->orWhereHas('task.users', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+        }
+        
+
+        return view('dashboard.activities', compact('activities'))->render();
+    }
+
     public function upload(Request $request)
     {
         if ($request->hasFile('file')) {

@@ -18,4 +18,10 @@ class Projects extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class,'related_id');
+    }
 }

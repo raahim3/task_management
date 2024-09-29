@@ -18,11 +18,11 @@
 
     <!-- START: Card Data-->
     <div class="row">
-        <div class="col-12 col-lg-12  mt-3">
+        <div class="col-12 col-lg-12 ">
             <div class="row">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-7">
                     <div class="row">
-                        <div class="col-12 col-sm-6 mt-3">
+                        <div class="col-12 col-sm-6">
                             <div class="card bg-primary">
                                 <div class="card-body">
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 mt-3">
+                        <div class="col-12 col-sm-6">
                             <div class="card">
                                 <div class="card-body">
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
@@ -81,18 +81,34 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 mt-3">
+                <div class="col-12  col-md-5 col-lg-5 ">
                     <div class="card">                           
                         <div class="card-content">
-                            <div class="card-body">
-
-                                <div id="apex_bar_chart" class="height-500"></div>
+                            <div class="card-body pt-0">
+                                <button class="btn btn-primary " id="syncBtn"><i class="fas fa-sync syncIcon"></i> Sync</button>
+                                <div class="row">                                           
+                                    <div class="col-12">
+                                        <ul class="activities mt-3 mb-2" id="activities">
+                                            
+                                        </ul> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>   
+        <div class="col-12 col-lg-12 mt-3">
+            <div class="card">                           
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <div id="apex_bar_chart" class="height-500"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="col-12 col-md-6 col-lg-4 mt-3">
             <div class="card">                            
@@ -546,57 +562,6 @@
             </div>
         </div>
         <div class="col-12  col-md-6 col-lg-4 mt-3">
-            <div class="card">                           
-                <div class="card-content">
-                    <div class="card-body pt-0">
-                        <div class="row">                                           
-                            <div class="col-12">
-                                <ul class="activities mt-3 mb-2">
-                                    <li class="activity py-2 border-left">
-                                        <div class="activity-absolute">
-                                            <div class="absolute-circle dropbox"><i class="fab fa-dropbox"></i></div>
-                                            <img src="{{ asset('assets/images/author8.jpg') }}" alt="author" width="50" class="rounded-circle position-absolute ml-35">
-                                        </div>
-
-                                        <p> <span class="text-primary font-weight-bold">Mark Pearson</span><br>
-                                            <span class="text-muted">60 min ago</span><br><br>
-                                            <b>File added to dropbox.</b></p>
-                                        <div class="d-flex">
-                                            <div>
-                                                <img src="{{ asset('assets/images/photoshop.png') }}" alt="photoshop" class="img-responsive">
-                                            </div>
-                                            <p class="ml-2">
-                                                Liner Admin.psd<br>
-                                                <a href="#" class="text-primary small">Download  <i class="fas   mr-2 fa-cloud-download-alt"></i></a>                                                                
-                                            </p>
-                                        </div>                                                         
-                                    </li>
-                                    <li class="activity py-3 border-left">
-                                        <div class="activity-absolute">
-                                            <div class="absolute-circle galleries"><i class="far fa-images"></i></div>
-                                            <img src="{{ asset('assets/images/author6.jpg') }}" alt="author" width="50" class="rounded-circle position-absolute ml-35">
-                                        </div>
-
-                                        <p> <span class="text-primary font-weight-bold">Sean	Gregory</span><br>
-                                            <span class="text-muted">30 min ago</span><br><br>
-                                            <b>Upload gallery images.</b></p>
-                                        <div class="mt-2">
-
-                                            <img src="{{ asset('assets/images/portfolio1.jpg') }}" alt="photoshop" width="100" class="img-responsive rounded">
-                                            <img src="{{ asset('assets/images/portfolio2.jpg') }}" alt="photoshop" width="100" class="img-responsive rounded ml-2">
-
-
-                                        </div>                                                         
-                                    </li>
-
-                                </ul> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12  col-md-6 col-lg-4 mt-3">
             <!-- Card -->
             <div class="card promoting-card">
 
@@ -645,4 +610,32 @@
     </div>
     <!-- END: Card DATA-->                 
 </div>
+@endsection
+
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+            activities();
+            $(document).on('click','#syncBtn',function(){
+                activities();
+            });
+        }); 
+
+        function activities(){
+            $.ajax({
+                url:"{{ route('activities') }}",
+                type:"GET",
+                beforeSend:function(){
+                    $('#syncBtn').attr('disabled',true); 
+                    $('.syncIcon').css('animation','spin 1s infinite linear'); 
+                },
+                success:function(data){
+                    $('#activities').html(data);
+                    $('#syncBtn').attr('disabled',false); 
+                    $('.syncIcon').css('animation','none'); 
+                }
+            });
+        }
+    </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\DataTables\ProjectsDataTable;
 use App\DataTables\ProjectTaskDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Projects;
@@ -66,6 +67,14 @@ class ProjectController extends Controller
         $project->user_id = auth()->user()->id;
         $project->organization_id = auth()->user()->organization->id;
         $project->save();
+
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'project',
+            'related_id' => $project->id,
+            'content' => 'Created a new project',
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success']);
     }
 
@@ -91,7 +100,14 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        if(!auth()->user()->hasPermission('project_edit')){
+            return response()->json(['status' => 'error','message' => 'You are not allowed to access this feature']);
+        }
+        $project = Projects::find($id);
+        $users = User::with('role')->where('organization_id',auth()->user()->organization->id)->where('id','!=',auth()->user()->id)->where('status',1)->take(15)->get();
+        $assign_ids = $project->users->pluck('id')->toArray();
+        return view('dashboard.projects.edit', compact('project','users','assign_ids'))->render();
+
     }
 
     /**
@@ -99,7 +115,38 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if(!auth()->user()->hasPermission('project_edit')){
+            return response()->json(['status' => 'error','message' => 'You are not authorized to access this page']);
+        }
+        $request->validate([
+            'name' => 'required',
+            'color' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'status' => 'required'
+        ]);
+        $project = Projects::find($id);
+        $project->name = $request->name;
+        $project->slug = Str::slug($request->name);
+        $project->color = $request->color;
+        $project->start_date = $request->start_date;
+        $project->end_date = $request->end_date;
+        $project->status = $request->status;
+        $project->description = $request->description;
+        $project->update();
+        if($request->assignees){
+            ProjectUser::where('project_id',$project->id)->delete();
+            foreach ($request->assignees as $key => $assignee) {
+                $exist = ProjectUser::where('project_id',$project->id)->where('user_id',$assignee)->first();
+                if(!$exist){
+                    $project = new ProjectUser();
+                    $project->project_id = $id;
+                    $project->user_id = $assignee;
+                    $project->save();                              
+                }
+            }
+        }
+        return response()->json(['status' => 'success']);
     }
 
     /**
@@ -136,6 +183,13 @@ class ProjectController extends Controller
 
                 $project->delete();
 
+                ActivityLog::create([
+                    'user_id' => auth()->user()->id,
+                    'type' => 'project',
+                    'related_id' => $project->id,
+                    'content' => 'Deleted project ' . $project->name,
+                    'organization_id' => auth()->user()->organization->id
+                ]);
                 return response()->json(['status' => 'success', 'message' => 'Project deleted successfully']);
             }
 
@@ -154,6 +208,14 @@ class ProjectController extends Controller
         $project = Projects::find($request->id);
         $project->status = $request->status;
         $project->save();
+
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'project',
+            'related_id' => $project->id,
+            'content' => 'Changed project status to ' . formatText($request->status),
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success','data' => $project]);
     } 
 
@@ -192,6 +254,14 @@ class ProjectController extends Controller
         $project->user_id = $request->user_id;
         $project->save();
         $user = User::find($request->user_id);
+
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'project',
+            'related_id' => $project->project_id,
+            'content' => 'Project assigned to ' . $user->name,
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success','user'=>$user]);
     }
 }

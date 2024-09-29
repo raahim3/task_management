@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,13 @@ class CommentController extends Controller
         $comment->user_id = auth()->user()->id;
         $comment->content = $request->comment;
         $comment->save();
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'task',
+            'related_id' => $comment->task_id,
+            'content' => 'Commented on a task '.$comment->task->name,
+            'organization_id' => auth()->user()->organization->id
+        ]);
         return response()->json(['status' => 'success']);
     }
 

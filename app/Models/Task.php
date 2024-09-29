@@ -33,4 +33,8 @@ class Task extends Model
     {
         return $this->hasMany(File::class);
     }
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class,'related_id');
+    }
 }

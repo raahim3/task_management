@@ -3,8 +3,8 @@
     <!-- START: Head-->
 <head>
         <meta charset="UTF-8">
-        <title>Pick Admin</title>
-        <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
+        <title>{{ $settings->title }}</title>
+        <link rel="shortcut icon" href="{{ asset('settings').'/'.$settings->favicon }}">
         <meta name="viewport" content="width=device-width,initial-scale=1"> 
 
         <!-- START: Template CSS-->

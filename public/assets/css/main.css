@@ -1454,7 +1454,7 @@ body::-webkit-scrollbar-thumb {
     border-width: 2px !important;
     position: relative;
     border-color: var(--bordercolor) !important;
-    margin-left: 62px;
+    margin-left: 28px;
     padding-left: 40px;
 }
 
@@ -5998,7 +5998,7 @@ path.domain {
     background-color: #cfffc3 !important;
 }
 
-.assignees-container {
+.assignees-container {  
     display: flex;
     align-items: center;
 }
@@ -6126,4 +6126,11 @@ path.domain {
 }
 .table td, .table th {
     vertical-align: middle;
+}
+
+#syncBtn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
 }
