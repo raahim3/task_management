@@ -28,8 +28,8 @@
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
                                         <i class="icon-basket icons card-liner-icon mt-2 text-white"></i>
                                         <div class='card-liner-content'>
-                                            <h2 class="card-liner-title text-white">2,390</h2>
-                                            <h6 class="card-liner-subtitle text-white">Today's Orders</h6>                                       
+                                            <h2 class="card-liner-title text-white">{{ number_format($total_projects) }}</h2>
+                                            <h6 class="card-liner-subtitle text-white">Total Projects</h6>                                       
                                         </div>                                
                                     </div>
                                     <div id="apex_primary_chart"></div>                               
@@ -42,11 +42,10 @@
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
                                         <i class="icon-user icons card-liner-icon mt-2"></i>
                                         <div class='card-liner-content'>
-                                            <h2 class="card-liner-title">9,390</h2>
-                                            <h6 class="card-liner-subtitle">Today's Visitors</h6> 
+                                            <h2 class="card-liner-title">{{ number_format($total_users) }}</h2>
+                                            <h6 class="card-liner-subtitle">Team</h6> 
                                         </div>                                
                                     </div>
-                                    <span class="bg-primary card-liner-absolute-icon text-white card-liner-small-tip">+4.8%</span>
                                     <div id="apex_today_visitors"></div> 
                                 </div>
                             </div>

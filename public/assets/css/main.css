@@ -6134,3 +6134,7 @@ path.domain {
     right: 10px;
     z-index: 2;
 }
+#activities{
+    height: 500px;
+    overflow-y: scroll;
+}

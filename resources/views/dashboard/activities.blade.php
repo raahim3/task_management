@@ -1,7 +1,7 @@
 @foreach ($activities as $activity)
     <li class="activity py-2 border-left">
         <div class="activity-absolute">
-            <img src="{{ $activity->user->avatar ? asset('avatars/'.$activity->user->avatar) : asset('default-avatar.webp') }}" alt="author" width="50" class="rounded-circle position-absolute ml-35">
+            <img src="{{ $activity->user->avatar ? asset('avatars/'.$activity->user->avatar) : asset('default-avatar.webp') }}" alt="author" width="50" height="50"  class="rounded-circle position-absolute ml-35">
         </div>
         <p> 
             <span class="text-primary font-weight-bold">{{ $activity->user->name }}</span><br>

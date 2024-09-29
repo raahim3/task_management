@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
+use App\Models\Projects;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,14 +28,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data['total_projects'] = Projects::where('organization_id',auth()->user()->organization->id)->count();
+        $data['total_users'] = User::where('organization_id',auth()->user()->organization->id)->count();
+        return view('home',$data);
     }
 
     public function activities()
     {
         $userId = auth()->id(); 
         if(auth()->user()->role_id == 2){
-            $activities = ActivityLog::where('organization_id',auth()->user()->organization->id)->orderBy('created_at', 'desc')->get();
+            $activities = ActivityLog::where('organization_id',auth()->user()->organization->id)->orderBy('created_at', 'desc')->take(20)->get();
         }
         else{
             $activities = ActivityLog::whereHas('project.users', function ($query) use ($userId) {
@@ -43,6 +47,7 @@ class HomeController extends Controller
                 $query->where('user_id', $userId);
             })
             ->orderBy('created_at', 'desc')
+            ->take(20)
             ->get();
         }
         
