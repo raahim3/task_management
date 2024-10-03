@@ -24,7 +24,7 @@ class ProjectsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('name', function ($project) {
-                $html = '<a href="'.route('project.show', $project->id).'" wire:navigate>'.$project->name.'</a><br>';
+                $html = '<a href="'.route('project.tasks', $project->id).'" wire:navigate>'.$project->name.'</a><br>';
                 if(auth()->user()->hasPermission('project_edit')){
                     $html .= '<a href="javascript:void(0)" class="edit_project" data-id="'.$project->id.'">Edit</a>';
                 }

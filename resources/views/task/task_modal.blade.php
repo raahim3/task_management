@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <a class="modal-title h4" href="{{ route('project.show', $task->project->id) }}"
+                <a class="modal-title h4" href="{{ route('project.tasks', $task->project->id) }}"
                     wire:navigate>{{ $task->project->name }}</a>
                 @php
                     if ($task->project->status == 'in_progress') {

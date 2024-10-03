@@ -7,12 +7,14 @@ use App\DataTables\ProjectTaskDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Comment;
+use App\Models\PrivateNote;
 use Illuminate\Http\Request;
 use App\Models\Projects;
 use App\Models\ProjectUser;
 use App\Models\Task;
 use App\Models\TaskUser;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -81,17 +83,14 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, ProjectTaskDataTable $dataTable)
+    public function show(string $id)
     {
         if(!auth()->user()->hasPermission('project_read')){
             return redirect()->route('home')->with('error', 'You are not authorized to access this page');
         }
-        if(!auth()->user()->hasPermission('task_read')){
-            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
-        }
-        $project = Projects::findOrFail($id);
+        $project = Projects::with('tasks')->findOrFail($id);
         $assignees = User::with('role')->where('organization_id',auth()->user()->organization->id)->where('id','!=',auth()->user()->id)->where('status',1)->take(15)->get();
-        return $dataTable->with('project_id', $id)->render('dashboard.projects.show', compact('project','assignees'));
+        return view('dashboard.projects.show', compact('project','assignees'));
     }
 
 
@@ -264,4 +263,71 @@ class ProjectController extends Controller
         ]);
         return response()->json(['status' => 'success','user'=>$user]);
     }
+    public function tasks(string $id, ProjectTaskDataTable $dataTable)
+    {
+        if(!auth()->user()->hasPermission('project_read')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
+        if(!auth()->user()->hasPermission('task_read')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
+        $project = Projects::findOrFail($id);
+        $assignees = User::with('role')->where('organization_id',auth()->user()->organization->id)->where('id','!=',auth()->user()->id)->where('status',1)->take(15)->get();
+        return $dataTable->with('project_id', $id)->render('dashboard.projects.task', compact('project','assignees'));
+    }
+    public function private_note(string $id)
+    {
+        if(!auth()->user()->hasPermission('project_read')){
+            return redirect()->route('home')->with('error', 'You are not authorized to access this page');
+        }
+        $project = Projects::findOrFail($id);
+        $note = PrivateNote::where('user_id',auth()->user()->id)->where('project_id',$id)->first();
+        return view('dashboard.projects.private_notes', compact('project','note'));
+    }
+    public function private_note_save(Request $request)
+    {
+        $note = PrivateNote::where('user_id',auth()->user()->id)->where('project_id',$request->project_id)->first();
+        if(!$note)
+        {
+            $note = new PrivateNote();
+        }
+        $note->project_id = $request->project_id;
+        $note->user_id = auth()->user()->id;
+        $note->content = $request->content;
+        $note->save();
+        return response()->json(['status'=>'success']);
+    }
+    
+
+    public function discussions($id)
+    {
+        $project = Projects::findOrFail($id);
+        return view('dashboard.projects.discussion',compact('project'));
+    }
+
+    public function image_upload(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('uploads', $filename, 'public');
+    
+            return response()->json(['success' => true, 'url' => asset('storage/' . $path),'path' => $path]);
+        }
+    
+        return response()->json(['success' => false], 400);
+    }
+
+    public function image_delete(Request $request)
+    {
+        $filePath = $request->input('path'); // Assuming the file path is sent via the request
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 404);
+    }
+
 }

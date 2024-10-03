@@ -40,6 +40,13 @@ Route::post('project/change/status',[ProjectController::class,'change_status'])-
 Route::post('get/assignees',[ProjectController::class,'get_assignees'])->name('get.assignees');
 Route::post('search/assignees',[ProjectController::class,'search_assignees'])->name('search.assignees');
 Route::post('project/add/assignees',[ProjectController::class,'add_assignees'])->name('project.add.assignees');
+Route::get('project/{id}/tasks',[ProjectController::class,'tasks'])->name('project.tasks');
+Route::get('project/{id}/private/notes',[ProjectController::class,'private_note'])->name('project.private.notes');
+Route::post('project/private/notes/save',[ProjectController::class,'private_note_save'])->name('project.private.notes.save');
+Route::get('project/{id}/discussions',[ProjectController::class,'discussions'])->name('project.discussion');
+Route::post('image/upload',[ProjectController::class,'image_upload'])->name('project.image.upload');
+Route::post('image/delete',[ProjectController::class,'image_delete'])->name('project.image.delete');
+
 
 Route::resource('task',TaskController::class);
 Route::post('task/add/assignees',[TaskController::class,'add_assignees'])->name('task.add.assignees');
@@ -69,3 +76,4 @@ Route::middleware('auth')->group(function () {
 
 // Cron Jobs
 Route::get('/analyse_subscriptions',[CronJobsController::class,'analyse_subscriptions'])->name('analyse_subscriptions');
+

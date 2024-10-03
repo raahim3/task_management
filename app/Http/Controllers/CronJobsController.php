@@ -10,6 +10,7 @@ class CronJobsController extends Controller
 {
     public function analyse_subscriptions()
     {
+        \Log::info('Analyzing subscriptions...');
         $subscriptions = Subscription::all();
         foreach ($subscriptions as $subscription) {
             if($subscription->status == 1){

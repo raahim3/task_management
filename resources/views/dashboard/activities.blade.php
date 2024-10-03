@@ -8,7 +8,7 @@
             <span class="text-muted">{{ $activity->created_at->diffForHumans() }}</span><br>
             <span>{!! $activity->content !!}</span><br>
             @if($activity->type == 'project' && $activity->project)
-                <a href="{{ route('project.show', $activity->project->id) }}"><b>#{{ $activity->project->name }}</b></a>
+                <a href="{{ route('project.tasks', $activity->project->id) }}"><b>#{{ $activity->project->name }}</b></a>
             @elseif($activity->type == 'task' && $activity->task)
                 <a href="#" class="show_task" data-id="{{ $activity->task->id }}" ><b>#{{ $activity->task->name }}</b></a>
             @else

@@ -32,7 +32,7 @@
                         }
                     @endphp
                     @foreach ($projects as $project)
-                        <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a href="{{ route('project.show', $project->id) }}" wire:navigate class="project_a"><i class="project_icon" style="background-color: {{ $project->color }} "></i> {{ $project->name }}</a></li>
+                        <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a href="{{ route('project.show', $project->id) }}" wire:navigate class="project_a"><i class="project_icon" style="background-color: {{ $project->color }} "></i> {{ substr($project->name,0,22) }}</a></li>
                     @endforeach
                 </ul>
             </li>
