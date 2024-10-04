@@ -2376,12 +2376,12 @@ footer.site-footer {
     left: 100%;
     width: 0;
     height: 0;
-    border: 20px solid transparent;
+    border: 15px solid transparent;
     border-top-color: var(--primarycolor);
     border-bottom: 0;
     border-left: 0;
     margin-left: 0px;
-    top: 20px;
+    top: 9px;
     z-index: 1;
 }
 
@@ -6140,18 +6140,31 @@ path.domain {
     height: 500px;
     overflow-y: scroll;
 }
-.image-wrapper{
-    position: relative;
-    width: fit-content;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    
+
+
+#message-box {
+    height: 150px;
+    overflow-y: auto;
+    padding: 10px; /* Adds some padding inside the message box */
 }
-.image-wrapper .delete-btn{
+
+.image-wrapper {
+    position: relative;
+    display: inline-block; /* Forces each image to appear on its own line */
+    margin-bottom: 15px; /* Space below the image */
+    width: 100%; /* Only takes up as much width as the content */
+}
+
+.image-wrapper img {
+    display: block; /* Ensures the image behaves as a block element */
+    max-width: 400px; /* Prevents image overflow */
+    height: auto; /* Maintains the aspect ratio */
+}
+
+.image-wrapper .delete-btn {
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 380px;
     background-color: #fff;
     padding: 5px;
     border-radius: 5px;
@@ -6160,8 +6173,16 @@ path.domain {
     border: 0px;
     font-size: 17px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 10; /* Keeps the delete button above the image */
+    display: inline-block;
 }
-#message-box{
-    height: 200px;
-    overflow-y: scroll;
+.chat_user_img{
+    width: 50px;
+    height: 50px;
+}
+#sendMsg{
+    position: absolute;
+    bottom: 26px;
+    right: 17px;
+    border: none;
 }

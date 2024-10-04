@@ -49,7 +49,7 @@
     <!-- END Head-->
 
     <!-- START: Body-->
-    <body id="main-container" class="default">
+    <body id="main-container" class="default horizontal-menu semi-dark" style="--primarycolor: #76c335;">
 
         <!-- START: Pre Loader-->
         {{-- <div class="se-pre-con">
@@ -206,8 +206,8 @@
         {{-- <script src="{{ asset('assets//js/select2.script.js') }}"></script> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="{{ asset('assets/vendors/sweetalert/sweetalert.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.2/dist/emoji-button.min.js"></script>
 
-        
         <!-- START: Page JS-->
         <script src="{{ asset('assets/js/home.script.js') }}"></script>
         <!-- END: Page JS-->
@@ -240,6 +240,9 @@
             @if(Session::has('warning'))
                 toastr.warning("{{ Session::get('warning') }}");
             @endif
+
+           
+
         </script>
         @include('task.task_script')  
     </body>

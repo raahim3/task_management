@@ -46,6 +46,9 @@ Route::post('project/private/notes/save',[ProjectController::class,'private_note
 Route::get('project/{id}/discussions',[ProjectController::class,'discussions'])->name('project.discussion');
 Route::post('image/upload',[ProjectController::class,'image_upload'])->name('project.image.upload');
 Route::post('image/delete',[ProjectController::class,'image_delete'])->name('project.image.delete');
+Route::post('project/message/store',[ProjectController::class,'message_store'])->name('project.message.store');
+Route::post('project/messages',[ProjectController::class,'messages'])->name('project.messages');
+
 
 
 Route::resource('task',TaskController::class);

@@ -24,4 +24,9 @@ class Projects extends Model
     {
         return $this->hasMany(ActivityLog::class,'related_id');
     }
+
+    public function discussions()
+    {
+        return $this->hasMany(Discussion::class,'project_id');
+    }
 }

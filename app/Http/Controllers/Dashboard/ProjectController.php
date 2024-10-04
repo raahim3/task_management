@@ -7,6 +7,7 @@ use App\DataTables\ProjectTaskDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Comment;
+use App\Models\Discussion;
 use App\Models\PrivateNote;
 use Illuminate\Http\Request;
 use App\Models\Projects;
@@ -330,4 +331,19 @@ class ProjectController extends Controller
         return response()->json(['success' => false], 404);
     }
 
+    public function message_store(Request $request)
+    {
+        $message = new Discussion();
+        $message->project_id = $request->project_id;
+        $message->user_id = auth()->user()->id;
+        $message->content = $request->message;
+        $message->save();
+        return response()->json(['status' => 'success','message' => $message]);
+    }
+
+    public function messages(Request $request)
+    {
+        $chats = Discussion::with('user')->where('project_id',$request->project_id)->get();
+        return view('dashboard.components.chats',compact('chats'))->render();
+    }
 }

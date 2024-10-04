@@ -88,4 +88,9 @@ class User extends Authenticatable
         return $this->hasMany(ActivityLog::class);
     }
 
+    public function discussions()
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
 }
