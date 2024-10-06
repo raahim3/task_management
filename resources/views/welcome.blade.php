@@ -4,8 +4,8 @@
     <div class="container-fluid header position-relative overflow-hidden p-0">
         <nav class="navbar navbar-expand-lg fixed-top navbar-light px-4 px-lg-5 py-3 py-lg-0">
             <a href="{{ url('/') }}" class="navbar-brand p-0">
-                @if($settings->light_logo)
-                    <img src="{{ asset('settings').'/'.$settings->light_logo }}" alt="Logo"> 
+                @if($settings->dark_logo)
+                    <img src="{{ asset('settings').'/'.$settings->dark_logo }}" alt="Logo"> 
                 @else
                     <h1 class="display-6 text-primary m-0">{{$settings->title}}</h1>
                 @endif

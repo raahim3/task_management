@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use App\Models\Projects;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +54,26 @@ class HomeController extends Controller
         
 
         return view('dashboard.activities', compact('activities'))->render();
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $tasks = Task::with('project')->where('name', 'like', '%' . $search . '%')->get();
+        $projects = Projects::where('name', 'like', '%' . $search . '%')->get();
+
+        $html = '';
+        foreach ($tasks as $task) {
+            $html .= '<li class="list-group-item">
+                            <a href="'. route('project.tasks' ,$task->project->id) .'">'.$task->name.' <small>(Task)<small></a>
+                        </li>';
+        }
+        foreach ($projects as $project) {
+            $html .= '<li class="list-group-item">
+                            <a href="'. route("project.show",$project->id) .'">'.$project->name.' <small>(Project)<small></a>
+                        </li>';
+        }
+        return response()->json(['html' => $html]);
     }
 
     public function upload(Request $request)

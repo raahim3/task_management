@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('meta_description');
             $table->string('keywords');
             $table->string('primary_color')->nullable();
+            $table->string('dashboard_primary_color')->nullable();
             $table->timestamps();
         });
     }

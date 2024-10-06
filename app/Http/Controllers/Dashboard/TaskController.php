@@ -196,7 +196,7 @@ class TaskController extends Controller
         ActivityLog::create([
             'user_id' => auth()->user()->id,
             'type' => 'task',
-            'related_id' => $task->id,
+            'related_id' => $request->task_id,
             'content' => 'Assigned a user '.$user->name,
             'organization_id' => auth()->user()->organization->id
         ]);

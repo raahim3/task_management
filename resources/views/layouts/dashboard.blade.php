@@ -40,7 +40,17 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert/sweetalert.css') }}">
         <!-- END: Page CSS-->
-
+        <style>
+            .horizontal-menu.semi-dark {
+                --headerbackground : {{ $settings->dashboard_primary_color }} !important;
+                --sidebarbg : {{ $settings->dashboard_primary_color }} !important;
+                --sidebaractivecolor : {{ $settings->dashboard_primary_color }} !important;
+            }
+            :root{
+                --primarycolor : {{ $settings->dashboard_primary_color }} !important;
+                --primary : {{ $settings->dashboard_primary_color }} !important;
+            }
+        </style>
         <!-- START: Custom CSS-->
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
         <!-- END: Custom CSS-->
@@ -49,7 +59,7 @@
     <!-- END Head-->
 
     <!-- START: Body-->
-    <body id="main-container" class="default horizontal-menu semi-dark" style="--primarycolor: #76c335;">
+    <body id="main-container" class="default horizontal-menu semi-dark">
 
         <!-- START: Pre Loader-->
         {{-- <div class="se-pre-con">
@@ -218,6 +228,22 @@
                 intSummernote();
                 intSelect2();
                 $('.dropify').dropify();
+
+                $(document).on('keyup','#searchInp',function(){
+                    $('#search_result').css('display', 'block');
+                    $.ajax({
+                        url: "{{ route('search') }}",
+                        type: "GET",
+                        data: {search: $(this).val()},
+                        success: function (data) {
+                            $("#search_result_ul").html(data.html);
+                        }
+                    });
+                });
+            $(document).on('click', function() {
+                $('#search_result').css('display', 'none');
+            });
+
             });
             toastr.options = {
                 "closeButton": true,

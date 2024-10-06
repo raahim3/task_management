@@ -1,7 +1,7 @@
 <div id="header-fix" class="header fixed-top">
     <div class="site-width">
         <nav class="navbar navbar-expand-lg  p-0">
-            <div class="navbar-header  h-100 h4 mb-0 align-self-center logo-bar text-left">  
+            <div class="navbar-header  h-100 h4 mb-0 d-flex align-items-center logo-bar text-left">  
                 <a href="{{ route('home') }}" class="horizontal-logo text-left">
                     @if($settings->light_logo)
                         <img src="{{ asset('settings').'/'.$settings->light_logo }}" alt="">
@@ -21,13 +21,32 @@
 
             <form class="float-left d-none d-lg-block search-form">
                 <div class="form-group mb-0 position-relative">
-                    <input type="text" class="form-control border-0 rounded bg-search pl-5" placeholder="Search anything...">
+                    <input type="text" class="form-control border-0 rounded bg-search pl-5" id="searchInp" placeholder="Search Task and Projects...">
                     <div class="btn-search position-absolute top-0">
                         <a href="#"><i class="h6 icon-magnifier"></i></a>
                     </div>
                     <a href="#" class="position-absolute close-button mobilesearch d-lg-none" data-toggle="dropdown" aria-expanded="false"><i class="icon-close h5"></i>                               
                     </a>
 
+                </div>
+                <style>
+                    #search_result{
+                        position: absolute;
+                        top: 67px;
+                        background-color: #fff;
+                        width: inherit;
+                        height: fit-content;
+                        max-height: 250px;
+                        overflow-y: scroll;
+                    }
+                    .search_items li a{
+                        color: var(--primary) !important;
+                        font-size: 14px;
+                        font-weight: 700
+                    }
+                </style>
+                <div id="search_result">
+                    <ul class="list-group list-unstyled search_items" id="search_result_ul"></ul>
                 </div>
             </form>
             <div class="navbar-right ml-auto h-100">

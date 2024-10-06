@@ -238,7 +238,7 @@ File: Main Style
 
 #header-fix .logo-bar {
     width: 250px;
-    padding: 16px 15px;
+    padding: 0px 10px;
     border-right: 1px solid var(--bordercolor);
     background: var(--logobg);
     transition: all 0.5s;
@@ -247,6 +247,9 @@ File: Main Style
 #header-fix .logo-bar .horizontal-logo {
     color: var(--logocolor);
     line-height: 31px;
+}
+#header-fix .logo-bar .horizontal-logo img{
+    width: 100%;
 }
 
 #header-fix .logo-bar .horizontal-logo svg {

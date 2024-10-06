@@ -2,14 +2,14 @@
     <div class="site-width">
         <!-- START: Menu-->
         <ul id="side-menu" class="sidebar-menu">
-            <li class="dropdown active"><a href="{{ url('dashboard') }}" wire:navigate><i class="icon-home mr-1"></i> Dashboard</a>                  
-                <ul>
-                    <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a href="{{ url('dashboard') }}"  wire:navigate><i class="icon-rocket"></i> Dashboard</a></li>
-                    @if(auth()->user()->hasPermission('team_read'))
-                        <li class="{{ Request::is('team') ? 'active' : '' }}"><a href="{{ route('team.index') }}"  wire:navigate><i class="icon-rocket"></i> Team</a></li>
-                    @endif
-                </ul>
+            <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ url('dashboard') }}" wire:navigate><i class="icon-home mr-1"></i> Dashboard</a>                  
             </li>
+            @if(auth()->user()->hasPermission('team_read'))
+            <li class="{{ request()->routeIs('team') ? 'active' : '' }}">
+                <a href="{{ route('team.index') }}" wire:navigate><i class="icon-user mr-1"></i> Team</a>                  
+            </li>
+            @endif
             <li class="dropdown">
                 <div class="d-flex justify-content-between a_alternative align-items-center">
                     <a href="{{ route('project.index') }}" wire:navigate style="pointer-events: auto !important"><i class="icon-grid mr-1"></i> Projects</a>
@@ -40,7 +40,7 @@
         </ul>
         <!-- END: Menu-->
         <ol class="breadcrumb bg-transparent align-self-center m-0 p-0 ml-auto">
-            <li class="breadcrumb-item"><a href="#">Application</a></li>
+            <li class="breadcrumb-item"><a href="#">{{ $settings->title }}</a></li>
             <li class="breadcrumb-item active">Dashboard</li>
         </ol>
     </div>

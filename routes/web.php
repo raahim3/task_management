@@ -34,6 +34,8 @@ Route::post('/delete-image', [HomeController::class, 'delete'])->name('image.del
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 Route::get('/activities', [HomeController::class, 'activities'])->name('activities');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+
 
 Route::resource('project',ProjectController::class);
 Route::post('project/change/status',[ProjectController::class,'change_status'])->name('project.change.status');
