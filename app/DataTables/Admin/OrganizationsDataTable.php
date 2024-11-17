@@ -29,7 +29,7 @@ class OrganizationsDataTable extends DataTable
             })
             ->addColumn('user_name',function($organization){
                 $user = User::where('organization_id',$organization->id)->where('role_id',2)->first();
-                return $user->name;
+                return $user->name ?? 'N/A';
             })
             ->addColumn('plan_name',function($organization){
                 $subscription = Subscription::where('organization_id',$organization->id)->where('status',1)->first();

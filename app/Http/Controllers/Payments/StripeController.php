@@ -48,7 +48,7 @@ class StripeController extends Controller
         $purchase = new PlanController();
         $response = $purchase->purchase($data);
         if($response){
-            return redirect('/')->with('success','Plan Purchased Successfully');
+            return redirect('/dashboard')->with('success','Plan Purchased Successfully');
         }
         
     }

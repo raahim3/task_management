@@ -2,31 +2,7 @@
 @section('content')
     <!-- Navbar & Hero Start -->
     <div class="container-fluid header position-relative overflow-hidden p-0">
-        <nav class="navbar navbar-expand-lg fixed-top navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="{{ url('/') }}" class="navbar-brand p-0">
-                @if($settings->dark_logo)
-                    <img src="{{ asset('settings').'/'.$settings->dark_logo }}" alt="Logo"> 
-                @else
-                    <h1 class="display-6 text-primary m-0">{{$settings->title}}</h1>
-                @endif
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
-                    <a href="javaScript:void()" class="nav-item nav-link">About</a>
-                    <a href="javaScript:void()  " class="nav-item nav-link">Contact Us</a>
-                </div>
-                @if (auth()->check())
-                <a href="{{ auth()->user()->role_id == 1 ? route('admin.index') : route('dashboard') }}" class="btn btn-primary rounded-pill text-white py-2 px-4">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-light border border-primary rounded-pill text-primary py-2 px-4 me-4">Log In</a>
-                    <a href="{{ route('register') }}" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a>
-                @endif
-            </div>
-        </nav>
+          
 
         <!-- Hero Header Start -->
         <div class="hero-header overflow-hidden px-5">

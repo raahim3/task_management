@@ -50,6 +50,7 @@ class OrganizationsController extends Controller
         $organization = Organization::with('subscriptions')->find($id);
         $subscription = $organization->subscriptions()->where('status', 1)->first();
         $plan = json_decode($subscription->plan_data);
+        // dd($plan);
         $plans = Plan::where('status', 1)->get();
         return view('admin.organizations.edit',compact('organization','plan','subscription','plans'));
     }

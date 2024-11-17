@@ -22,7 +22,7 @@ class IsSuperAdmin
                 return $next($request);
             }
             else{
-                return redirect('/dashboard')->with('error', 'You are not authorized to access this page');
+                return redirect('/dashboard');
             }
         }
         else

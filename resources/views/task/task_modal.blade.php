@@ -38,22 +38,24 @@
                             <textarea name="description" class="summernote" id="" cols="30" rows="10">{!! $task->description !!}</textarea>
                             <button type="submit" class="btn btn-info mt-4">Update</button>
                         </form>
-                        <div class="d-flex flex-wrap files_main p-2">
-                            @foreach ($task->files as $file)
-                              <div class="col-md-3 col-6 p-1 ">
-                                <a class="file" href="{{ asset($file->path) }}" target="_blank" download>
-                                  <i class="icon-trash text-danger delete_file" data-url="{{ route('task.file.delete', $file->id) }}"></i>
-                                  @if($file->file_type == 'image')
-                                    <img src="{{ asset($file->path) }}" alt="{{ $file->name }}">
-                                  @else
-                                    <i class="icon-file"></i>
-                                    <span>{{ $file->name }}</span>
-                                  @endif
-                                </a>
-                              </div>
-                            @endforeach
-                          </div>
-                        <div>
+                        @if (count($task->files) > 0)
+                            <div class="d-flex flex-wrap files_main p-2">
+                                @foreach ($task->files as $file)
+                                <div class="col-md-3 col-6 p-1 ">
+                                    <a class="file" href="{{ asset($file->path) }}" target="_blank" download>
+                                    <i class="icon-trash text-danger delete_file" data-url="{{ route('task.file.delete', $file->id) }}"></i>
+                                    @if($file->file_type == 'image')
+                                        <img src="{{ asset($file->path) }}" alt="{{ $file->name }}">
+                                    @else
+                                        <i class="icon-file"></i>
+                                        <span>{{ $file->name }}</span>
+                                    @endif
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+                            @endif
+                            <div>
                             <form class="comment_main" id="commentForm" method="POST">
                                 <input type="hidden" name="id" value="{{ $task->id }}">
                                 <textarea name="comment" class="summernote" id="" cols="30" rows="8"></textarea>

@@ -1,4 +1,4 @@
-(function ($) {
+document.addEventListener('livewire:load', function () {
     "use strict";
     var primarycolor = getComputedStyle(document.body).getPropertyValue('--primarycolor');
 
@@ -441,7 +441,7 @@
     }
 
 
-})(jQuery);
+});
 function createCookie(name, value) {
     var now = new Date();
     now.setTime(now.getTime() + 1 * 3600 * 1000);

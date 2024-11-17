@@ -50,8 +50,8 @@
                             <div class="form-group col-md-6 mt-3">
                                 <label for="name">Plan</label>
                                 <select name="plan" class="form-control" id="plan">
-                                    @foreach ($plans as $plan)
-                                        <option value="{{ $plan->id }}" {{ $plan->id == $subscription->plan_id ? 'selected' : '' }}>{{ $plan->name }}</option>
+                                    @foreach ($plans as $plan_item)
+                                        <option value="{{ $plan_item->id }}" {{ $plan_item->id == $subscription->plan_id ? 'selected' : '' }}>{{ $plan_item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('plan')
@@ -66,7 +66,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-    
                             <div class="form-group col-md-6 mt-3">
                                 <label for="max_projects">No of Projects</label>
                                 <input type="number" name="max_projects" id="no_of_projects" class="form-control" required value="{{ $plan->max_projects }}">

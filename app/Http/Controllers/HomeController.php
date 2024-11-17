@@ -65,12 +65,12 @@ class HomeController extends Controller
         $html = '';
         foreach ($tasks as $task) {
             $html .= '<li class="list-group-item">
-                            <a href="'. route('project.tasks' ,$task->project->id) .'">'.$task->name.' <small>(Task)<small></a>
+                            <a href="'. route('project.tasks' ,$task->project->id) .'" wire:navigate>'.$task->name.' <small>(Task)<small></a>
                         </li>';
         }
         foreach ($projects as $project) {
             $html .= '<li class="list-group-item">
-                            <a href="'. route("project.show",$project->id) .'">'.$project->name.' <small>(Project)<small></a>
+                            <a href="'. route("project.show",$project->id) .'" wire:navigate>'.$project->name.' <small>(Project)<small></a>
                         </li>';
         }
         return response()->json(['html' => $html]);
